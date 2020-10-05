@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: dev
+  bot:
+    plugin-list:
+      - net.lz1998.zbot.plugin.TestPlugin
+      - net.lz1998.zbot.plugin.ScramblePlugin
