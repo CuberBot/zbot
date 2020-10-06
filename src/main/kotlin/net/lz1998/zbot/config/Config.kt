@@ -5,6 +5,9 @@ class Config {
         val ADMIN_LIST = listOf(
                 875543533L, 535660742L
         )
-        val MAIN_ADMIN = 875543533L
+        const val MAIN_ADMIN = 875543533L
+        const val MAIN_GROUP_ID = 374735267L
+        const val ADMIN_GROUP_ID = 374735267L
+        const val MAIN_ROBOT_ID = 2490390725L
     }
 }

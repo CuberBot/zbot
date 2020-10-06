@@ -25,11 +25,14 @@ repositories {
 
 dependencies {
     implementation("net.lz1998:pbbot-spring-boot-starter:0.0.8")
+    implementation("com.squareup.okhttp3:okhttp:4.2.0")
 
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+//    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    implementation("org.springframework.boot:spring-boot-starter-security")
+//    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     compileOnly("org.projectlombok:lombok")
@@ -40,7 +43,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
-    testImplementation("org.springframework.security:spring-security-test")
+//    testImplementation("org.springframework.security:spring-security-test")
 }
 
 tasks.withType<Test> {

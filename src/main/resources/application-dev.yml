@@ -1,0 +1,22 @@
+zbot:
+  tnoodle: tnoodle.lz1998.xin
+  wcads: wcads.lz1998.xin
+  visualcube: visualcube.lz1998.xin
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:mysql://vls.lz1998.xin/zbot?useUnicode=true&serverTimezone=Asia/Shanghai
+    username: zbot
+    password: 123456 # 这个数据库反正也没啥用，服务器是闲置服务器，密码随便设的
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      max-lifetime: 30000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  redis:
+    host: vls.lz1998.xin
+    port: 8085
+    password: fwcnb
