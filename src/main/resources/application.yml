@@ -1,12 +1,21 @@
 spring:
   profiles:
-    active: dev
+    active:
+      - dev
+      - test
+      - prod
   bot:
     plugin-list:
-      - net.lz1998.zbot.plugin.TestPlugin
-      - net.lz1998.zbot.plugin.CollisionPlugin
-      - net.lz1998.zbot.plugin.LogPlugin
-      - net.lz1998.zbot.plugin.AddFriendPlugin
-      - net.lz1998.zbot.plugin.RepeatPlugin
-      - net.lz1998.zbot.plugin.SwitchPlugin
-      - net.lz1998.zbot.plugin.ScramblePlugin
+      - net.lz1998.zbot.plugin.TestPlugin # 测试
+      - net.lz1998.zbot.plugin.CollisionPlugin # 解决总群冲突
+      - net.lz1998.zbot.plugin.LogPlugin # 日志
+      - net.lz1998.zbot.plugin.AddFriendPlugin # 自动同意加好友
+      - net.lz1998.zbot.plugin.AuthPlugin # 授权
+      - net.lz1998.zbot.plugin.RepeatPlugin # 复读
+      - net.lz1998.zbot.plugin.SecurityPlugin # 网页验证码
+      - net.lz1998.zbot.plugin.SwitchPlugin # 开关
+      - net.lz1998.zbot.plugin.ScramblePlugin # 打乱
+      - net.lz1998.zbot.plugin.WcaPlugin # WCA 成绩
+      - net.lz1998.zbot.plugin.RankPlugin # WCA 排名
+      - net.lz1998.zbot.plugin.LinkPlugin # WCA 粗饼链接
+      - net.lz1998.zbot.plugin.SummaryPlugin # WCA 粗饼年度总结

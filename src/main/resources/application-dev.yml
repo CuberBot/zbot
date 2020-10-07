@@ -1,14 +1,23 @@
 zbot:
-  tnoodle: tnoodle.lz1998.xin
-  wcads: wcads.lz1998.xin
-  visualcube: visualcube.lz1998.xin
+  config:
+    main-group-id: 374735267
+    main-admin: 875543533
+    main-robot-id: 2490390725
+    super-admin-list:
+      - 875543533
+      - 535660742
+  service:
+    tnoodle: tnoodle.lz1998.xin
+    wcads: wcads.lz1998.xin
+    vscube: vscube.lz1998.xin
+    rank: sunshy.sinaapp.com
 server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:mysql://vls.lz1998.xin/zbot?useUnicode=true&serverTimezone=Asia/Shanghai
-    username: zbot
-    password: 123456 # 这个数据库反正也没啥用，服务器是闲置服务器，密码随便设的
+    url: jdbc:mysql://localhost/zbot?useUnicode=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       max-lifetime: 30000
@@ -17,6 +26,5 @@ spring:
       ddl-auto: update
     show-sql: true
   redis:
-    host: vls.lz1998.xin
-    port: 8085
-    password: fwcnb
+    host: localhost
+    password: 123456

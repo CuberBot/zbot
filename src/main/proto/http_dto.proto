@@ -1,0 +1,47 @@
+syntax = "proto3";
+package dto;
+
+message LoginReq{
+  int64 userId = 1;
+  string password = 2;
+}
+message LoginResp{
+  Type type = 1;
+  string result = 2;
+  enum Type{
+    CaptchaCode = 0;
+    Token = 1;
+  }
+}
+
+
+message WcaUser{
+  int64 user_id = 1;
+  string wca_id = 2;
+  string name = 3;
+  string gender = 4;
+  bool open = 5;
+  bool default_attend = 6;
+  bool enabled = 7;
+}
+
+message SetWcaCodeReq{
+  string code = 1;
+  string redirect_uri = 2;
+}
+message SetWcaCodeResp{
+  string msg = 1;
+  WcaUser wca_user = 2;
+}
+
+message GetWcaUserReq{
+}
+message GetWcaUserResp{
+  WcaUser wca_user = 1;
+}
+
+service HttpService{
+  rpc Login(LoginReq)returns (LoginResp);
+  rpc SetWcaCode(SetWcaCodeReq)returns (SetWcaCodeResp);
+  rpc GetWcaUser(GetWcaUserReq)returns (GetWcaUserResp);
+}

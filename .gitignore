@@ -34,3 +34,6 @@ out/
 .vscode/
 
 application-prod.yml
+application-test.yml
+src/main/java/dto/**
+.DS_Store

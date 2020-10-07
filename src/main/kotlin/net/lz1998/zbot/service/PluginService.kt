@@ -5,7 +5,6 @@ package net.lz1998.zbot.service
 import net.lz1998.pbbot.bot.BotPlugin
 import net.lz1998.zbot.aop.annotations.SwitchFilter
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
 import org.springframework.core.type.filter.AnnotationTypeFilter
 import org.springframework.stereotype.Service
@@ -21,7 +20,7 @@ class PluginService {
         provider.addIncludeFilter(AnnotationTypeFilter(SwitchFilter::class.java))
         val components = provider.findCandidateComponents("net.lz1998")
         return components.map {
-            Class.forName(it.beanClassName).getAnnotation(SwitchFilter::class.java)?.value?:""
+            Class.forName(it.beanClassName).getAnnotation(SwitchFilter::class.java)?.value ?: ""
         }.filter { it != "" }
     }
 }

@@ -6,7 +6,7 @@ import net.lz1998.pbbot.bot.BotPlugin
 import net.lz1998.zbot.aop.annotations.PrefixFilter
 import net.lz1998.zbot.aop.annotations.SwitchFilter
 import net.lz1998.zbot.service.PluginSwitchService
-import net.lz1998.zbot.utils.hasAdminRole
+import net.lz1998.zbot.utils.isAdmin
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -21,7 +21,7 @@ class SwitchPlugin : BotPlugin() {
         var msg = event.rawMessage
         val groupId = event.groupId
         val retMsg: String
-        if (msg.startsWith("停用") && hasAdminRole(event.sender)) {
+        if (msg.startsWith("停用") && isAdmin(event.sender)) {
             msg = msg.substring("停用".length).trim { it <= ' ' }.toLowerCase()
             if (!pluginSwitchService.isPluginExist(msg)) {
                 retMsg = "功能不存在"
@@ -33,7 +33,7 @@ class SwitchPlugin : BotPlugin() {
             bot.sendGroupMsg(groupId, retMsg, false)
             return MESSAGE_BLOCK
         }
-        if (msg.startsWith("启用") && hasAdminRole(event.sender)) {
+        if (msg.startsWith("启用") && isAdmin(event.sender)) {
             msg = msg.substring("启用".length).trim { it <= ' ' }.toLowerCase()
             if (!pluginSwitchService.isPluginExist(msg)) {
                 retMsg = "功能不存在"
