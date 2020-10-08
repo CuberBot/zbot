@@ -5,9 +5,13 @@ package net.lz1998.zbot.service
 import net.lz1998.zbot.entity.PluginSwitch
 import net.lz1998.zbot.repository.PluginSwitchRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheConfig
+import org.springframework.cache.annotation.CachePut
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 @Service
+@CacheConfig(cacheNames = ["plugin_switch"])
 class PluginSwitchService {
     @Autowired
     lateinit var pluginSwitchRepository: PluginSwitchRepository
@@ -15,14 +19,15 @@ class PluginSwitchService {
     @Autowired
     lateinit var pluginService: PluginService
 
-    fun setPluginSwitch(groupId: Long, pluginName: String, stop: Boolean) =
-            pluginSwitchRepository.save(
-                    PluginSwitch(
-                            groupId = groupId,
-                            pluginName = pluginName,
-                            stop = stop)
-            )
+    @CachePut(key = "#groupId+'_'+#pluginName")
+    fun setPluginSwitch(groupId: Long, pluginName: String, stop: Boolean): Boolean =
+            pluginSwitchRepository.save(PluginSwitch(
+                    groupId = groupId,
+                    pluginName = pluginName,
+                    stop = stop
+            )).stop
 
+    @Cacheable(key = "#groupId+'_'+#pluginName")
     fun isPluginStop(groupId: Long, pluginName: String): Boolean =
             pluginSwitchRepository.findPluginSwitchByGroupIdAndPluginName(
                     groupId = groupId,

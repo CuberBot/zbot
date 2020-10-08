@@ -20,12 +20,10 @@ class AuthService {
     }
 
     @CachePut(key = "#groupId")
-    fun setAuth(groupId: Long, isAuth: Boolean, adminId: Long): Boolean {
-        val auth = Auth(
-                groupId = groupId,
-                isAuth = isAuth,
-                adminId = adminId
-        )
-        return authRepository.save(auth).isAuth
-    }
+    fun setAuth(groupId: Long, isAuth: Boolean, adminId: Long): Boolean =
+            authRepository.save(Auth(
+                    groupId = groupId,
+                    isAuth = isAuth,
+                    adminId = adminId
+            )).isAuth
 }
