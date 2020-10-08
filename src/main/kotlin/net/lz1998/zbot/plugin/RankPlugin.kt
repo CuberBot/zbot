@@ -10,6 +10,7 @@ import net.lz1998.zbot.service.WcaService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.net.URL
+import java.net.URLEncoder
 import java.nio.charset.Charset
 
 @Component
@@ -27,7 +28,8 @@ class RankPlugin : BotPlugin() {
         val userId = event.userId
         if (rawMsg.startsWith("rank")) {
             rawMsg = rawMsg.substring("rank".length).trim()
-            val retMsg = wcaService.handleWca(userId, rawMsg) { URL("${findPersonUrl}${it.id}").readText(Charset.forName("GBK")).replace("#success", "") }
+            val url = "${findPersonUrl}${URLEncoder.encode(rawMsg, Charsets.UTF_8.name())}"
+            val retMsg = URL(url).readText(Charset.forName("GBK")).replace("#success", "")
             bot.sendGroupMsg(groupId, retMsg)
             return MESSAGE_BLOCK
         }
