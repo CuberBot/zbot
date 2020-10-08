@@ -29,7 +29,7 @@ class AuthPlugin : BotPlugin() {
         }
         if (rawMsg.startsWith("授权+")) {
             rawMsg = rawMsg.substring("授权+".length).trim()
-            rawMsg.toLongOrNull()?.let {
+            rawMsg.toLongOrNull()?.also {
                 authService.setAuth(groupId = it, isAuth = true, adminId = userId)
                 bot.sendGroupMsg(group_id = groupId, message = "授权成功 $it")
             } ?: bot.sendGroupMsg(group_id = groupId, message = "群号错误")
@@ -37,7 +37,7 @@ class AuthPlugin : BotPlugin() {
         }
         if (rawMsg.startsWith("授权-")) {
             rawMsg = rawMsg.substring("授权-".length).trim()
-            rawMsg.toLongOrNull()?.let {
+            rawMsg.toLongOrNull()?.also {
                 authService.setAuth(groupId = it, isAuth = false, adminId = userId)
                 bot.sendGroupMsg(group_id = groupId, message = "取消授权 $it")
             } ?: bot.sendGroupMsg(group_id = groupId, message = "群号错误")
