@@ -144,7 +144,7 @@ class WcaService {
             } catch (e: Exception) {
             }
         }
-        val wcaPeople = searchPeople(q) ?: return "ERROR!"
+        val wcaPeople = searchPeople(q)
         if (wcaPeople.isEmpty()) {
             return "NOT FOUND!"
         }

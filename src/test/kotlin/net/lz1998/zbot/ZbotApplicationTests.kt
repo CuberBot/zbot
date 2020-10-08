@@ -16,8 +16,8 @@ class ZbotApplicationTests {
 
     @Test
     fun contextLoads() {
-        val result = wcaService.handleWca(875543543, "李政 2016") { wcaService.getWcaPersonResultString(it) }
-        println(result)
+//        val result = wcaService.handleWca(875543543, "李政 2016") { wcaService.getWcaPersonResultString(it) }
+//        println(result)
     }
 
 }
