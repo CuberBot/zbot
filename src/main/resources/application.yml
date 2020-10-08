@@ -20,3 +20,4 @@ spring:
       - net.lz1998.zbot.plugin.RankPlugin # WCA 排名
       - net.lz1998.zbot.plugin.LinkPlugin # WCA 粗饼链接
       - net.lz1998.zbot.plugin.SummaryPlugin # WCA 粗饼年度总结
+      - net.lz1998.zbot.plugin.WelcomePlugin # 入群欢迎

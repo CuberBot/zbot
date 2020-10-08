@@ -1,5 +1,6 @@
 package net.lz1998.zbot.aop
 
+import net.lz1998.pbbot.alias.GroupIncreaseNoticeEvent
 import net.lz1998.pbbot.alias.GroupMessageEvent
 import net.lz1998.pbbot.alias.Message
 import net.lz1998.pbbot.alias.PrivateMessageEvent
@@ -55,12 +56,19 @@ class PluginAspect {
         return pjp.proceed(args) as Int
     }
 
-    @Around(value = "execution(int net.lz1998.zbot.plugin.*.onGroupMessage(..)) && @within(switchFilter)", argNames = "pjp, switchFilter")
+    @Around(value = "execution(int net.lz1998.zbot.plugin.*.*(..)) && @within(switchFilter)", argNames = "pjp, switchFilter")
     fun checkSwitch(pjp: ProceedingJoinPoint, switchFilter: SwitchFilter): Int {
         val args = pjp.args
         val pluginName = switchFilter.value
-        args.forEachIndexed { index, arg ->
+        args.forEachIndexed { _, arg ->
             if (arg is GroupMessageEvent) {
+                val groupId = arg.groupId
+                val stop = pluginSwitchService.isPluginStop(groupId = groupId, pluginName = pluginName)
+                if (stop) {
+                    return BotPlugin.MESSAGE_IGNORE
+                }
+            }
+            if (arg is GroupIncreaseNoticeEvent) {
                 val groupId = arg.groupId
                 val stop = pluginSwitchService.isPluginStop(groupId = groupId, pluginName = pluginName)
                 if (stop) {
