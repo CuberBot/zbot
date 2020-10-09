@@ -1,13 +1,25 @@
 package net.lz1998.zbot.plugin
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 import net.lz1998.pbbot.alias.*
 import net.lz1998.pbbot.bot.Bot
 import net.lz1998.pbbot.bot.BotPlugin
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 // TODO
 @Component
 class LogPlugin : BotPlugin() {
+
+    val log: Logger = LoggerFactory.getLogger(this::class.java)
+    val objMapper = ObjectMapper()
+            .configure(SerializationFeature.WRITE_SELF_REFERENCES_AS_NULL, true)
+            .configure(SerializationFeature.FAIL_ON_SELF_REFERENCES, false)
+            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+
+
     override fun onFriendAddNotice(bot: Bot, event: FriendAddNoticeEvent): Int {
         return super.onFriendAddNotice(bot, event)
     }
@@ -33,6 +45,7 @@ class LogPlugin : BotPlugin() {
     }
 
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
+        log.info("RECV GROUP_MSG {}", objMapper.writeValueAsString(event))
         return super.onGroupMessage(bot, event)
     }
 
@@ -45,6 +58,7 @@ class LogPlugin : BotPlugin() {
     }
 
     override fun onPrivateMessage(bot: Bot, event: PrivateMessageEvent): Int {
+        log.info("RECV PRIVATE_MSG {}", objMapper.writeValueAsString(event.toBuilder()))
         return super.onPrivateMessage(bot, event)
     }
 }
