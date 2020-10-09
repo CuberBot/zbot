@@ -24,7 +24,7 @@ class RepeatPlugin : BotPlugin() {
         }
         val lastRepeatTime = lastRepeatTimeMap.getOrDefault(groupId, 0L)
         if (System.currentTimeMillis() - lastRepeatTime < 300 * 1000L) {
-            // 最短30秒复读一次
+            // 最短300秒复读一次
             return MESSAGE_IGNORE
         }
         val lastMsg = lastMsgMap.getOrDefault(groupId, "<null/>")
