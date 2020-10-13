@@ -40,7 +40,7 @@ class CollisionPlugin : BotPlugin() {
                 return MESSAGE_BLOCK
             }
             lastNoticeTimeMap[groupId] = time
-            bot.sendGroupMsg(ZbotConfig.adminGroupId, "发现重复群$groupId", false)
+            bot.sendGroupMsg(ZbotConfig.adminGroupId, "发现重复群$groupId")
             return MESSAGE_BLOCK
         }
         return MESSAGE_IGNORE

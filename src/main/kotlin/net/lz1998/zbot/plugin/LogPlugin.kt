@@ -45,7 +45,8 @@ class LogPlugin : BotPlugin() {
     }
 
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
-        log.info("RECV GROUP_MSG {}", objMapper.writeValueAsString(event))
+//        log.info("RECV GROUP_MSG {}", objMapper.writeValueAsString(event))
+        log.info("RECV GROUP MSG groupId={} userId={} msg={}", event.groupId, event.userId, event.rawMessage)
         return super.onGroupMessage(bot, event)
     }
 
@@ -58,7 +59,8 @@ class LogPlugin : BotPlugin() {
     }
 
     override fun onPrivateMessage(bot: Bot, event: PrivateMessageEvent): Int {
-        log.info("RECV PRIVATE_MSG {}", objMapper.writeValueAsString(event.toBuilder()))
+//        log.info("RECV PRIVATE_MSG {}", objMapper.writeValueAsString(event))
+        log.info("RECV PRIVATE MSG userId={} msg={}", event.userId, event.rawMessage)
         return super.onPrivateMessage(bot, event)
     }
 }

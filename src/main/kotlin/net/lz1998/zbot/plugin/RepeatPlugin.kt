@@ -32,7 +32,7 @@ class RepeatPlugin : BotPlugin() {
         if (lastMsg == rawMsg && rawMsg.length < 50) {
             if (random.nextInt(100) % 10 == 0) {
                 lastRepeatTimeMap[groupId] = System.currentTimeMillis()
-                bot.sendGroupMsg(groupId, msg, false)
+                bot.sendGroupMsg(groupId, msg)
                 return MESSAGE_IGNORE
             }
         }

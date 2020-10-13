@@ -21,11 +21,11 @@ class SecurityPlugin : BotPlugin() {
         if (rawMsg.startsWith("验证码")) {
             rawMsg = rawMsg.substring("验证码".length).trim()
             val retMsg = userService.register(userId = userId, verificationCode = rawMsg)
-            bot.sendPrivateMsg(userId, retMsg, false)
+            bot.sendPrivateMsg(userId, retMsg)
             return MESSAGE_BLOCK
         }
 
-        return super.onPrivateMessage(bot, event)
+        return MESSAGE_IGNORE
     }
 
     @PrefixFilter(".")
@@ -36,10 +36,10 @@ class SecurityPlugin : BotPlugin() {
         if (rawMsg.startsWith("验证码")) {
             rawMsg = rawMsg.substring("验证码".length).trim()
             val retMsg = userService.register(userId = userId, verificationCode = rawMsg)
-            bot.sendGroupMsg(groupId, retMsg, false)
+            bot.sendGroupMsg(groupId, retMsg)
             return MESSAGE_BLOCK
         }
-        return super.onGroupMessage(bot, event)
+        return MESSAGE_IGNORE
     }
 
 

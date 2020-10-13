@@ -53,13 +53,14 @@ class ScramblePlugin : BotPlugin() {
                 return try {
                     val scramble = getScramble(puzzle.shortName)
                     val imgUrl = "http://${ServiceConfig.tnoodle}/view/${puzzle.shortName}.png?scramble=" + URLEncoder.encode(scramble, "utf-8")
-                    val retMsg = Msg.builder().text("${puzzle.showName}\n${scramble}\n").image(imgUrl)
-                    bot.sendGroupMsg(groupId, retMsg, false)
+                    Msg.builder()
+                            .text("${puzzle.showName}\n${scramble}\n")
+                            .image(imgUrl)
+                            .sendToGroup(bot, groupId)
                     MESSAGE_BLOCK
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    val retMsg = "获取打乱失败"
-                    bot.sendGroupMsg(groupId, retMsg, false)
+                    bot.sendGroupMsg(groupId, "获取打乱失败")
                     MESSAGE_BLOCK
                 }
             }
@@ -70,12 +71,12 @@ class ScramblePlugin : BotPlugin() {
                 return try {
                     val scramble = scrambleService.getScrambleSlidysim(puzzle.n)
                     val retMsg = "${puzzle.showName}\n${scramble}"
-                    bot.sendGroupMsg(groupId, retMsg, false)
+                    bot.sendGroupMsg(groupId, retMsg)
                     MESSAGE_BLOCK
                 } catch (e: Exception) {
                     e.printStackTrace()
                     val retMsg = "获取打乱失败"
-                    bot.sendGroupMsg(groupId, retMsg, false)
+                    bot.sendGroupMsg(groupId, retMsg)
                     MESSAGE_BLOCK
                 }
             }

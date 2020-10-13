@@ -20,34 +20,29 @@ class SwitchPlugin : BotPlugin() {
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         var msg = event.rawMessage
         val groupId = event.groupId
-        val retMsg: String
         if (msg.startsWith("停用") && isAdmin(event.sender)) {
             msg = msg.substring("停用".length).trim { it <= ' ' }.toLowerCase()
             if (!pluginSwitchService.isPluginExist(msg)) {
-                retMsg = "功能不存在"
-                bot.sendGroupMsg(groupId, retMsg, false)
+                bot.sendGroupMsg(groupId, "功能不存在")
                 return MESSAGE_BLOCK
             }
             pluginSwitchService.setPluginSwitch(groupId, msg, true)
-            retMsg = "停用成功"
-            bot.sendGroupMsg(groupId, retMsg, false)
+            bot.sendGroupMsg(groupId, "停用成功")
             return MESSAGE_BLOCK
         }
         if (msg.startsWith("启用") && isAdmin(event.sender)) {
             msg = msg.substring("启用".length).trim { it <= ' ' }.toLowerCase()
             if (!pluginSwitchService.isPluginExist(msg)) {
-                retMsg = "功能不存在"
-                bot.sendGroupMsg(groupId, retMsg, false)
+                bot.sendGroupMsg(groupId, "功能不存在")
                 return MESSAGE_BLOCK
             }
             pluginSwitchService.setPluginSwitch(groupId, msg, false)
-            retMsg = "启用成功"
-            bot.sendGroupMsg(groupId, retMsg, false)
+            bot.sendGroupMsg(groupId, "启用成功")
             return MESSAGE_BLOCK
         }
 
         return if (pluginSwitchService.isPluginStop(groupId, "回复")) {
             MESSAGE_BLOCK
-        } else super.onGroupMessage(bot, event)
+        } else MESSAGE_IGNORE
     }
 }

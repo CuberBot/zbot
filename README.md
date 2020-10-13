@@ -1,6 +1,6 @@
 # Zbot
 
-本项目基于[ProtobufBot](https://github.com/protobufbot)开发，使用`AGPLv3`开源，所有基于本项目的软件应使用`AGPLv3`开源（间接或直接）
+本项目基于[ProtobufBot](https://github.com/protobufbot)开发，使用`AGPLv3`开源，所有基于本项目（间接或直接）或参考了本项目实现的软件应使用`AGPLv3`开源
 
 ## 功能
 - [x] 授权
@@ -23,7 +23,7 @@
 5. 运行`java -jar zbot-版本号.jar`
 
 ## 注意
-- 默认的 service 有 **QPS<=2** 限制，如果需要增加QPS，需要自己部署相关服务（TNOODLE、WCADS等），建议使用多台服务器分开进行部署
+- 默认的 service 有 **QPS<=3** 限制，如果需要增加QPS，需要自己部署相关服务（TNOODLE、WCADS等），建议使用多台服务器分开进行部署
     - [WCADS](https://github.com/lz1998/wca-data-service) 需要4G内存，可能存在内存泄露
     - TNOODLE 需要500M内存
     - 其他服务加起来2G内存
