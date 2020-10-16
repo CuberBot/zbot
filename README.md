@@ -14,6 +14,15 @@
 - [x] WCA 排名查询
 - [x] 粗饼链接
 - [x] 粗饼年度总结
+- [ ] WCA成绩趋势图
+- [ ] WCA群纪录
+- [ ] WCA群排名
+- [ ] 粗饼赛事查询
+- [ ] 粗饼赛事选手查询
+- [ ] 生成魔方图片
+- [ ] 群管
+- [ ] 学习
+- [ ] 快递
 
 ## 使用方式
 1. 下载 [Spring-Mirai-Client](https://github.com/ProtobufBot/Spring-Mirai-Client/releases)到服务器，并运行`java jar spring-mirai-client-版本.jar`，浏览器打开`http://服务器地址:9000`，输入管理账号密码(默认admin/123456)，登陆机器人并处理验证码
