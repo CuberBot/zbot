@@ -18,4 +18,7 @@ object ServiceConfig {
 
     @Value("\${zbot.service.rank}")
     var rank = "sunshy.sinaapp.com"
+
+    @Value("\${zbot.service.cubing}")
+    var cubing = "cubingchina.com"
 }

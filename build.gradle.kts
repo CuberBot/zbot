@@ -50,7 +50,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java-util:3.12.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC")
-    implementation("net.lz1998:pbbot-spring-boot-starter:0.0.11")
+    implementation("net.lz1998:pbbot-spring-boot-starter:0.0.12")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
 
     kapt("org.springframework.boot:spring-boot-configuration-processor")
