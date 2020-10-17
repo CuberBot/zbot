@@ -44,43 +44,33 @@ class WcaService {
     }
 
     fun getWcaPersonResultString(wcaPerson: WcaPerson): String {
-        var singleDataList: List<WcaRank> = getSingleRankList(wcaPerson.id) ?: return "ERROR!"
+        val singleDataList: List<WcaRank> = getSingleRankList(wcaPerson.id) ?: return "ERROR!"
         val averageDataList: List<WcaRank> = getAverageRankList(wcaPerson.id) ?: return "ERROR!"
-        val wcaId: String = wcaPerson.id
-        val name: String = wcaPerson.name
-        val country: String = wcaPerson.countryId
-        val gender: String = if ("m" == wcaPerson.gender) "Male" else "Female"
-        val resultBuilder = StringBuilder(name)
-        resultBuilder.append("\n").append("$wcaId,$country,$gender")
-        singleDataList = singleDataList.sortedBy {
-            eventOrder.indexOf(it.eventId)
-        }
-        for (singleData in singleDataList) {
-            val eventId = singleData.eventId
-            resultBuilder.append("\n").append("$eventId ").append(resultStringFormat(singleData.best, eventId))
-            // 如果有平均，显示平均
-            for (averageData in averageDataList) {
-                if (eventId == averageData.eventId) {
-                    resultBuilder.append("|").append(resultStringFormat(averageData.best, eventId))
+        val result = singleDataList
+                .sortedBy { eventOrder.indexOf(it.eventId) }
+                .joinToString("\n") { sin ->
+                    "${sin.eventId} ${resultStringFormat(sin.best, sin.eventId)}" + (
+                            averageDataList
+                                    .firstOrNull { avg -> avg.eventId == sin.eventId }
+                                    ?.let { avg -> "|${resultStringFormat(avg.best, avg.eventId)}" }
+                                    ?: ""
+                            )
                 }
-            }
-        }
-        return resultBuilder.toString()
+        return """${wcaPerson.name}
+            #${wcaPerson.id},${wcaPerson.countryId},${if ("m" == wcaPerson.gender) "Male" else "Female"}
+            #$result
+        """.trimMargin("#")
     }
 
     fun resultStringFormat(result: Int, eventId: String): String {
-        if (result == -1) {
-            return "DNF"
-        }
-        if (result == -2) {
-            return "DNS"
-        }
-        if (result == 0) {
+        return if (result == -1) {
+            "DNF"
+        } else if (result == -2) {
+            "DNS"
+        } else if (result == 0) {
             return ""
-        }
-        val resultStr: String
-        if ("333fm" == eventId) {
-            resultStr = if (result > 1000) {
+        } else if ("333fm" == eventId) {
+            if (result > 1000) {
                 String.format("%.2f", result.toDouble() / 100)
             } else {
                 result.toString()
@@ -94,19 +84,18 @@ class WcaService {
             var mbfSec = mbfTime % 10000
             val mbfMin = mbfSec / 60
             mbfSec %= 60
-            resultStr = String.format("%d/%d %d:%02d", mbfSolved, mbfAttempted, mbfMin, mbfSec)
+            String.format("%d/%d %d:%02d", mbfSolved, mbfAttempted, mbfMin, mbfSec)
         } else {
             var sec = result / 100
             val msec = result % 100
             if (sec > 59) {
                 val min = sec / 60
                 sec %= 60
-                resultStr = String.format("%d:%02d.%02d", min, sec, msec)
+                String.format("%d:%02d.%02d", min, sec, msec)
             } else {
-                resultStr = String.format("%d.%02d", sec, msec)
+                String.format("%d.%02d", sec, msec)
             }
         }
-        return resultStr
     }
 
     fun resultStringFormat(result: Long, eventId: String): String {
@@ -135,7 +124,7 @@ class WcaService {
         q = atDecode(q)
         if (isNumber(q.trim { it <= ' ' })) {
             try {
-                userId = q.trim { it <= ' ' }.toLong()
+                userId = q.trim().toLong()
                 val wcaUser: WcaUser? = personalService.getWcaUser(userId)
                 if (wcaUser != null && wcaUser.open) {
                     val me = getExactPerson(wcaUser.wcaId) ?: return "ERROR!"
