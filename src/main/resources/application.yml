@@ -21,4 +21,5 @@ spring:
       - net.lz1998.zbot.plugin.SummaryPlugin # WCA 粗饼年度总结
       - net.lz1998.zbot.plugin.CompPlugin # 粗饼赛事查询
       - net.lz1998.zbot.plugin.CuberPlugin # 粗饼比赛选手
+      - net.lz1998.zbot.plugin.CubepicPlugin # 生成魔方图
       - net.lz1998.zbot.plugin.WelcomePlugin # 入群欢迎
