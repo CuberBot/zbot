@@ -12,6 +12,8 @@ zbot:
     vscube: vscube.lz1998.xin
     rank: sunshy.sinaapp.com
     cubing: cubingchina.com
+    echarts: echarts.lz1998.xin
+    self: localhost:8081
 server:
   port: 8081
 spring:

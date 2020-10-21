@@ -17,7 +17,7 @@
 - [x] 粗饼赛事查询 Comp
 - [x] 粗饼赛事选手查询 Cuber
 - [x] 生成魔方图片 Cubepic
-- [ ] WCA成绩趋势图 Trend
+- [x] WCA成绩趋势图 Trend
 - [ ] WCA群纪录 GroupRecord
 - [ ] WCA群排名 GroupRank
 - [ ] 群管 Admin
@@ -32,7 +32,7 @@
 5. 运行`java -jar zbot-版本号.jar`
 
 ## 注意
-- 默认的 service 有 **QPS<=3** 限制，如果需要增加QPS，需要自己部署相关服务（TNOODLE、WCADS等），建议使用多台服务器分开进行部署
+- 默认的 service 有 **QPS<=5** 限制，如果需要增加QPS，需要自己部署相关服务（TNOODLE、WCADS等），建议使用多台服务器分开进行部署
     - [WCADS](https://github.com/lz1998/wca-data-service) 需要4G内存，可能存在内存泄露
     - TNOODLE 需要500M内存
     - 其他服务加起来2G内存

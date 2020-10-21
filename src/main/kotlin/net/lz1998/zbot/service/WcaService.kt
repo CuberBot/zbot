@@ -6,6 +6,7 @@ import net.lz1998.zbot.config.ServiceConfig
 import net.lz1998.zbot.entity.wcads.WcaPerson
 import net.lz1998.zbot.entity.wcads.WcaRank
 import net.lz1998.zbot.entity.WcaUser
+import net.lz1998.zbot.entity.wcads.WcaResult
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpMethod
@@ -24,6 +25,7 @@ class WcaService {
     val searchPeopleUrl: String get() = "http://${ServiceConfig.wcads}/wcaPerson/searchPeople?q={q}"
     val singleRankUrl: String get() = "http://${ServiceConfig.wcads}/wcaSingle/findBestResultsByPersonId?personId={personId}"
     val averageRankUrl: String get() = "http://${ServiceConfig.wcads}/wcaAverage/findBestResultsByPersonId?personId={personId}"
+    val trendUrl: String get() = "http://${ServiceConfig.wcads}/wcaResult/findResultsByPersonIdAndEventIdOrderByDateAndRound?personId={personId}&eventId={eventId}"
 
 
     fun getExactPerson(wcaId: String): WcaPerson? {
@@ -41,6 +43,10 @@ class WcaService {
 
     fun getAverageRankList(wcaId: String): List<WcaRank>? {
         return restTemplate.exchange(averageRankUrl, HttpMethod.GET, null, typeRef<ListResult<WcaRank>>(), wcaId).body?.data
+    }
+
+    fun getResultList(wcaId: String, eventId: String): List<WcaResult>? {
+        return restTemplate.exchange(trendUrl, HttpMethod.GET, null, typeRef<ListResult<WcaResult>>(), wcaId, eventId).body?.data
     }
 
     fun getWcaPersonResultString(wcaPerson: WcaPerson): String {

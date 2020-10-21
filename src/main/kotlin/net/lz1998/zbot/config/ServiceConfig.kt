@@ -21,4 +21,10 @@ object ServiceConfig {
 
     @Value("\${zbot.service.cubing}")
     var cubing = "cubingchina.com"
+
+    @Value("\${zbot.service.echarts}")
+    var echarts = "echarts.lz1998.xin"
+
+    @Value("\${zbot.service.self}")
+    var self = "127.0.0.1" // 自己的局域网IP
 }

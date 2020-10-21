@@ -18,7 +18,8 @@ spring:
       - net.lz1998.zbot.plugin.WcaPlugin # WCA 成绩
       - net.lz1998.zbot.plugin.RankPlugin # WCA 排名
       - net.lz1998.zbot.plugin.LinkPlugin # WCA 粗饼链接
-      - net.lz1998.zbot.plugin.SummaryPlugin # WCA 粗饼年度总结
+      - net.lz1998.zbot.plugin.TrendPlugin # WCA成绩趋势图
+      - net.lz1998.zbot.plugin.SummaryPlugin # 粗饼年度总结
       - net.lz1998.zbot.plugin.CompPlugin # 粗饼赛事查询
       - net.lz1998.zbot.plugin.CuberPlugin # 粗饼比赛选手
       - net.lz1998.zbot.plugin.CubepicPlugin # 生成魔方图
