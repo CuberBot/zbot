@@ -18,10 +18,10 @@
 - [x] 粗饼赛事选手查询 Cuber
 - [x] 生成魔方图片 Cubepic
 - [x] WCA成绩趋势图 Trend
+- [x] 学习 Learn
 - [ ] WCA群纪录 GroupRecord
 - [ ] WCA群排名 GroupRank
 - [ ] 群管 Admin
-- [ ] 学习 Learn
 - [ ] 快递 Express
 
 ## 使用方式

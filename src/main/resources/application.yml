@@ -24,3 +24,4 @@ spring:
       - net.lz1998.zbot.plugin.CuberPlugin # 粗饼比赛选手
       - net.lz1998.zbot.plugin.CubepicPlugin # 生成魔方图
       - net.lz1998.zbot.plugin.WelcomePlugin # 入群欢迎
+      - net.lz1998.zbot.plugin.LearnPlugin # 学习 自定义回复内容
