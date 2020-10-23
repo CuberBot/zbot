@@ -19,10 +19,10 @@
 - [x] 生成魔方图片 Cubepic
 - [x] WCA成绩趋势图 Trend
 - [x] 学习 Learn
+- [x] 快递 Express
 - [ ] WCA群纪录 GroupRecord
 - [ ] WCA群排名 GroupRank
 - [ ] 群管 Admin
-- [ ] 快递 Express
 
 ## 使用方式
 1. 下载 [Go-Mirai-Client](https://github.com/ProtobufBot/Go-Mirai-Client/releases) / [Spring-Mirai-Client](https://github.com/ProtobufBot/Spring-Mirai-Client/releases) 到服务器，并运行 `chmod +x Go-Mirai-Client && ./Go-Mirai-Client` / `java jar spring-mirai-client-版本.jar` ，浏览器打开`http://服务器地址:9000`，输入管理账号密码(默认admin/123456)，登陆机器人并处理验证码
