@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package net.lz1998.zbot.service
 
 import kotlinx.serialization.SerialName
@@ -102,14 +100,9 @@ class PersonalService {
         return wcaUserRepository.findWcaUserByUserId(userId)
     }
 
-    fun setDefaultAttend(userId: Long, defaultAttend: Boolean) {
+    fun updateWcaUser(userId: Long, open: Boolean, defaultAttend: Boolean) {
         val wcaUser = wcaUserRepository.findWcaUserByUserId(userId) ?: return
         wcaUser.defaultAttend = defaultAttend
-        wcaUserRepository.save(wcaUser)
-    }
-
-    fun setOpen(userId: Long?, open: Boolean) {
-        val wcaUser = wcaUserRepository.findWcaUserByUserId(userId!!) ?: return
         wcaUser.open = open
         wcaUserRepository.save(wcaUser)
     }

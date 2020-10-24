@@ -27,4 +27,11 @@ class PersonalController {
         val wcaUser = personalService.getWcaUser(userId)
         return HttpDto.GetWcaUserResp.newBuilder().setWcaUser(wcaUser?.toDto()).build()
     }
+
+    @PostMapping("/updateWcaUser", produces = ["application/x-protobuf"], consumes = ["application/x-protobuf"])
+    fun updateWcaUser(req: HttpDto.UpdateWcaUserReq): HttpDto.UpdateWcaUserResp {
+        val userId = SecurityContextHolder.getContext().authentication.principal as Long
+        personalService.updateWcaUser(userId, req.wcaUser.open, req.wcaUser.defaultAttend)
+        return HttpDto.UpdateWcaUserResp.newBuilder().build()
+    }
 }

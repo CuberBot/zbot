@@ -40,8 +40,15 @@ message GetWcaUserResp{
   WcaUser wca_user = 1;
 }
 
+message UpdateWcaUserReq{
+  WcaUser wca_user = 1;
+}
+message UpdateWcaUserResp{
+}
+
 service HttpService{
   rpc Login(LoginReq)returns (LoginResp);
   rpc SetWcaCode(SetWcaCodeReq)returns (SetWcaCodeResp);
   rpc GetWcaUser(GetWcaUserReq)returns (GetWcaUserResp);
+  rpc UpdateWcaUser(UpdateWcaUserReq)returns (UpdateWcaUserResp);
 }
