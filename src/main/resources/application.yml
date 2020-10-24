@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: zbot
   profiles:
     active:
       - dev
@@ -27,3 +29,11 @@ spring:
       - net.lz1998.zbot.plugin.WelcomePlugin # 入群欢迎
       - net.lz1998.zbot.plugin.LearnPlugin # 学习 自定义回复内容
       - net.lz1998.zbot.plugin.ExpressPlugin # 快递
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'prometheus'
+  metrics:
+    tags:
+      application: ${spring.application.name}
