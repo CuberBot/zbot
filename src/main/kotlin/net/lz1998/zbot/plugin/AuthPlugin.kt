@@ -20,14 +20,13 @@ class AuthPlugin : BotPlugin() {
         val userId = event.userId
         val groupId = event.groupId
         var rawMsg = event.rawMessage.trim()
-        if (!isSuperAdmin(userId)) return MESSAGE_IGNORE
 
-        if (rawMsg == "授权") {
+        if (rawMsg == "授权" && isSuperAdmin(userId)) {
             authService.setAuth(groupId = groupId, isAuth = true, adminId = userId)
             bot.sendGroupMsg(group_id = groupId, message = "授权成功 $groupId")
             return MESSAGE_BLOCK
         }
-        if (rawMsg.startsWith("授权+")) {
+        if (rawMsg.startsWith("授权+") && isSuperAdmin(userId)) {
             rawMsg = rawMsg.substring("授权+".length).trim()
             rawMsg.toLongOrNull()?.also {
                 authService.setAuth(groupId = it, isAuth = true, adminId = userId)
@@ -35,7 +34,7 @@ class AuthPlugin : BotPlugin() {
             } ?: bot.sendGroupMsg(group_id = groupId, message = "群号错误")
             return MESSAGE_BLOCK
         }
-        if (rawMsg.startsWith("授权-")) {
+        if (rawMsg.startsWith("授权-") && isSuperAdmin(userId)) {
             rawMsg = rawMsg.substring("授权-".length).trim()
             rawMsg.toLongOrNull()?.also {
                 authService.setAuth(groupId = it, isAuth = false, adminId = userId)
