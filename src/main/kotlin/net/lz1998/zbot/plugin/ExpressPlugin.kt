@@ -16,24 +16,20 @@ class ExpressPlugin : BotPlugin() {
     @Autowired
     lateinit var expressService: ExpressService
 
-    @PrefixFilter(".")
+    @PrefixFilter([".查快递"])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val groupId = event.groupId
         var rawMsg = event.rawMessage
-        if (rawMsg.startsWith("查快递")) {
-            rawMsg = rawMsg.substring("查快递".length).trim()
-            rawMsg = rawMsg.replace("：", ":")
-            var type = "auto";
-            var number = rawMsg
-            val split = rawMsg.split(":")
-            if (split.size > 1) {
-                number = split[0]
-                type = split[1]
-            }
-            val result = expressService.queryExpress(number, type)
-            bot.sendGroupMsg(groupId, result)
-            return MESSAGE_BLOCK
+        rawMsg = rawMsg.replace("：", ":")
+        var type = "auto";
+        var number = rawMsg
+        val split = rawMsg.split(":")
+        if (split.size > 1) {
+            number = split[0]
+            type = split[1]
         }
-        return MESSAGE_IGNORE
+        val result = expressService.queryExpress(number, type)
+        bot.sendGroupMsg(groupId, result)
+        return MESSAGE_BLOCK
     }
 }

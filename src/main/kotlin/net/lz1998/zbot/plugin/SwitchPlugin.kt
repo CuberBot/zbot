@@ -16,7 +16,7 @@ class SwitchPlugin : BotPlugin() {
     @Autowired
     lateinit var pluginSwitchService: PluginSwitchService
 
-    @PrefixFilter(".")
+    @PrefixFilter(["."])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         var msg = event.rawMessage
         val groupId = event.groupId

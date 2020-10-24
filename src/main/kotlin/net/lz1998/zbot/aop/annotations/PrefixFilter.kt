@@ -3,4 +3,4 @@ package net.lz1998.zbot.aop.annotations
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
-annotation class PrefixFilter(val value: String)
+annotation class PrefixFilter(val value: Array<String>, val ignoreCase: Boolean = true)

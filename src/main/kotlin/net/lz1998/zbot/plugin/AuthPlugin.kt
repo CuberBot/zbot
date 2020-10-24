@@ -15,39 +15,41 @@ class AuthPlugin : BotPlugin() {
     @Autowired
     lateinit var authService: AuthService
 
-    @PrefixFilter(".")
+    @PrefixFilter([".授权+", ".授权-", ".授权", "."])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val userId = event.userId
         val groupId = event.groupId
-        var rawMsg = event.rawMessage.trim()
-        if (!isSuperAdmin(userId)) return MESSAGE_IGNORE
-
-        if (rawMsg == "授权") {
-            authService.setAuth(groupId = groupId, isAuth = true, adminId = userId)
-            bot.sendGroupMsg(group_id = groupId, message = "授权成功 $groupId")
-            return MESSAGE_BLOCK
-        }
-        if (rawMsg.startsWith("授权+")) {
-            rawMsg = rawMsg.substring("授权+".length).trim()
-            rawMsg.toLongOrNull()?.also {
-                authService.setAuth(groupId = it, isAuth = true, adminId = userId)
-                bot.sendGroupMsg(group_id = groupId, message = "授权成功 $it")
-            } ?: bot.sendGroupMsg(group_id = groupId, message = "群号错误")
-            return MESSAGE_BLOCK
-        }
-        if (rawMsg.startsWith("授权-")) {
-            rawMsg = rawMsg.substring("授权-".length).trim()
-            rawMsg.toLongOrNull()?.also {
-                authService.setAuth(groupId = it, isAuth = false, adminId = userId)
-                bot.sendGroupMsg(group_id = groupId, message = "取消授权 $it")
-            } ?: bot.sendGroupMsg(group_id = groupId, message = "群号错误")
-            return MESSAGE_BLOCK
-        }
-        return if (authService.isAuth(groupId)) {
-            MESSAGE_IGNORE
-        } else {
-            // TODO 提示
-            MESSAGE_BLOCK
+        val rawMsg = event.rawMessage.trim()
+        return when (event.extraMap.getOrDefault("command", "")) {
+            ".授权+" -> {
+                if (!isSuperAdmin(userId)) return MESSAGE_IGNORE
+                rawMsg.toLongOrNull()?.also {
+                    authService.setAuth(groupId = it, isAuth = true, adminId = userId)
+                    bot.sendGroupMsg(group_id = groupId, message = "授权成功 $it")
+                } ?: bot.sendGroupMsg(group_id = groupId, message = "群号错误")
+                MESSAGE_BLOCK
+            }
+            ".授权-" -> {
+                if (!isSuperAdmin(userId)) return MESSAGE_IGNORE
+                rawMsg.toLongOrNull()?.also {
+                    authService.setAuth(groupId = it, isAuth = false, adminId = userId)
+                    bot.sendGroupMsg(group_id = groupId, message = "取消授权 $it")
+                } ?: bot.sendGroupMsg(group_id = groupId, message = "群号错误")
+                MESSAGE_BLOCK
+            }
+            ".授权" -> {
+                authService.setAuth(groupId = groupId, isAuth = true, adminId = userId)
+                bot.sendGroupMsg(group_id = groupId, message = "授权成功 $groupId")
+                MESSAGE_BLOCK
+            }
+            else -> {
+                if (authService.isAuth(groupId)) {
+                    MESSAGE_IGNORE
+                } else {
+                    // TODO 提示
+                    MESSAGE_BLOCK
+                }
+            }
         }
     }
 

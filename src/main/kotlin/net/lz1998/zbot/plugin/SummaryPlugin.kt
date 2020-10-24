@@ -15,17 +15,13 @@ class SummaryPlugin : BotPlugin() {
     @Autowired
     lateinit var wcaService: WcaService
 
-    @PrefixFilter(".")
+    @PrefixFilter([".summary"])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val groupId = event.groupId
         val userId = event.userId
-        var rawMsg = event.rawMessage.toLowerCase()
-        if (rawMsg.startsWith("summary")) {
-            rawMsg = rawMsg.substring("summary".length).trim()
-            val retMsg = wcaService.handleWca(userId, rawMsg) { "https://cubingchina.com/summary/2019/${it.id}" }
-            bot.sendGroupMsg(groupId, retMsg)
-            return MESSAGE_BLOCK
-        }
-        return MESSAGE_IGNORE
+        val rawMsg = event.rawMessage.toLowerCase().trim()
+        val retMsg = wcaService.handleWca(userId, rawMsg) { "https://cubingchina.com/summary/2019/${it.id}" }
+        bot.sendGroupMsg(groupId, retMsg)
+        return MESSAGE_BLOCK
     }
 }

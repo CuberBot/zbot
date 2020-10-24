@@ -15,24 +15,20 @@ class CuberPlugin : BotPlugin() {
     @Autowired
     lateinit var cubingService: CubingService
 
-    @PrefixFilter(".")
+    @PrefixFilter([".cuber"])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val groupId = event.groupId
-        var rawMsg = event.rawMessage
-        if (rawMsg.startsWith("cuber")) {
-            rawMsg = rawMsg.substring("cuber".length).trim()
-            val competitionNameList = cubingService
-                    .getCompetitionList()
-                    .filter { System.currentTimeMillis() < it.date.to * 1000L }
-                    .filter { cubingService.getCompetitorList(it.alias).map { it.competitor.name }.contains(rawMsg) }
-                    .map { it.name }
-            if (competitionNameList.isEmpty()) {
-                bot.sendGroupMsg(groupId, "${rawMsg}近期没有报名比赛")
-                return MESSAGE_BLOCK
-            }
-            bot.sendGroupMsg(groupId, "${rawMsg}报名了以下比赛\n" + competitionNameList.joinToString("\n"))
+        val rawMsg = event.rawMessage.trim()
+        val competitionNameList = cubingService
+                .getCompetitionList()
+                .filter { System.currentTimeMillis() < it.date.to * 1000L }
+                .filter { cubingService.getCompetitorList(it.alias).map { it.competitor.name }.contains(rawMsg) }
+                .map { it.name }
+        if (competitionNameList.isEmpty()) {
+            bot.sendGroupMsg(groupId, "${rawMsg}近期没有报名比赛")
             return MESSAGE_BLOCK
         }
-        return super.onGroupMessage(bot, event)
+        bot.sendGroupMsg(groupId, "${rawMsg}报名了以下比赛\n" + competitionNameList.joinToString("\n"))
+        return MESSAGE_BLOCK
     }
 }

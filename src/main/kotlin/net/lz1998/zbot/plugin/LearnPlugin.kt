@@ -17,7 +17,7 @@ class LearnPlugin : BotPlugin() {
     @Autowired
     lateinit var learnService: LearnService
 
-    @PrefixFilter(".")
+    @PrefixFilter(["."])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val groupId = event.groupId
         val userId = event.userId

@@ -15,17 +15,13 @@ class LinkPlugin : BotPlugin() {
     @Autowired
     lateinit var wcaService: WcaService
 
-    @PrefixFilter(".")
+    @PrefixFilter([".link"])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val groupId = event.groupId
         val userId = event.userId
-        var rawMsg = event.rawMessage.toLowerCase()
-        if (rawMsg.startsWith("link")) {
-            rawMsg = rawMsg.substring("link".length).trim()
-            val retMsg = wcaService.handleWca(userId, rawMsg) { "https://cubingchina.com/results/person/${it.id}" }
-            bot.sendGroupMsg(groupId, retMsg)
-            return MESSAGE_BLOCK
-        }
-        return MESSAGE_IGNORE
+        val rawMsg = event.rawMessage.toLowerCase().trim()
+        val retMsg = wcaService.handleWca(userId, rawMsg) { "https://cubingchina.com/results/person/${it.id}" }
+        bot.sendGroupMsg(groupId, retMsg)
+        return MESSAGE_BLOCK
     }
 }

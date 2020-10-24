@@ -14,32 +14,23 @@ class SecurityPlugin : BotPlugin() {
     @Autowired
     lateinit var userService: UserService
 
-    @PrefixFilter(".")
+    @PrefixFilter([".验证码"])
     override fun onPrivateMessage(bot: Bot, event: PrivateMessageEvent): Int {
         val userId = event.userId
-        var rawMsg = event.rawMessage
-        if (rawMsg.startsWith("验证码")) {
-            rawMsg = rawMsg.substring("验证码".length).trim()
-            val retMsg = userService.register(userId = userId, verificationCode = rawMsg)
-            bot.sendPrivateMsg(userId, retMsg)
-            return MESSAGE_BLOCK
-        }
-
-        return MESSAGE_IGNORE
+        var rawMsg = event.rawMessage.trim()
+        val retMsg = userService.register(userId = userId, verificationCode = rawMsg)
+        bot.sendPrivateMsg(userId, retMsg)
+        return MESSAGE_BLOCK
     }
 
-    @PrefixFilter(".")
+    @PrefixFilter([".验证码"])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val groupId = event.groupId
         val userId = event.userId
-        var rawMsg = event.rawMessage
-        if (rawMsg.startsWith("验证码")) {
-            rawMsg = rawMsg.substring("验证码".length).trim()
-            val retMsg = userService.register(userId = userId, verificationCode = rawMsg)
-            bot.sendGroupMsg(groupId, retMsg)
-            return MESSAGE_BLOCK
-        }
-        return MESSAGE_IGNORE
+        val rawMsg = event.rawMessage.trim()
+        val retMsg = userService.register(userId = userId, verificationCode = rawMsg)
+        bot.sendGroupMsg(groupId, retMsg)
+        return MESSAGE_BLOCK
     }
 
 

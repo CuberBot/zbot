@@ -13,7 +13,7 @@ class BlackPlugin : BotPlugin() {
     @Autowired
     lateinit var blackService: BlackService
 
-    @PrefixFilter(".")
+    @PrefixFilter(["."])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val groupId = event.groupId
         val userId = event.userId

@@ -18,12 +18,13 @@ class CompPlugin : BotPlugin() {
     @Autowired
     lateinit var cubingService: CubingService
 
-    @PrefixFilter(".")
+    @PrefixFilter([".comp"])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val groupId = event.groupId
-        var rawMsg = event.rawMessage
+        val rawMsg = event.rawMessage.trim()
 
-        if ("comp" == rawMsg) { // 赛事列表
+        val command = event.extraMap.getOrDefault("command", "")
+        if (rawMsg == "") {
             val competitionList = cubingService.getCompetitionList().filter { System.currentTimeMillis() < it.date.to * 1000L }
             if (competitionList.isEmpty()) {
                 bot.sendGroupMsg(groupId, "近期没有赛事")
@@ -36,10 +37,7 @@ class CompPlugin : BotPlugin() {
             retMsg += "\n回复.comp 编号 查看详情"
             bot.sendGroupMsg(groupId, retMsg)
             return MESSAGE_BLOCK
-        }
-
-        if (rawMsg.startsWith("comp")) {
-            rawMsg = rawMsg.substring("comp".length).trim()
+        } else {
             val index = rawMsg.toIntOrNull()
             if (index == null) {
                 bot.sendGroupMsg(groupId, "编号错误")
@@ -64,10 +62,7 @@ class CompPlugin : BotPlugin() {
                 bot.sendGroupMsg(groupId, retMsg)
                 return MESSAGE_BLOCK
             }
-
         }
-
-        return MESSAGE_IGNORE
     }
 
     private fun compTimeFormat(time: Int): String {

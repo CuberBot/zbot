@@ -21,41 +21,35 @@ class TrendPlugin : BotPlugin() {
     @Autowired
     lateinit var wcaService: WcaService
 
-    @PrefixFilter(".")
+    @PrefixFilter([".trend"])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val groupId = event.groupId
         val userId = event.userId
-        var rawMsg = event.rawMessage
-
-        if (rawMsg.startsWith("trend")) {
-            rawMsg = rawMsg.substring("trend".length).trim()
-            val args = rawMsg.split("-")
-            val q = args[0]
-            var type = "sin"
-            var eventId = "333"
-            var theme = "macarons"
-            args.forEach {
-                if (eventIdList.contains(it.trim())) {
-                    eventId = it.trim()
-                }
-                if (typeList.contains(it.trim())) {
-                    type = it.trim()
-                }
-                if (themeList.contains(it.trim())) {
-                    theme = it.trim().replace("_", "-")
-                }
+        val rawMsg = event.rawMessage
+        val args = rawMsg.split("-")
+        val q = args[0]
+        var type = "sin"
+        var eventId = "333"
+        var theme = "macarons"
+        args.forEach {
+            if (eventIdList.contains(it.trim())) {
+                eventId = it.trim()
             }
-            val result = wcaService.handleWca(userId, q) {
-                "http://${ServiceConfig.self}/trend/getImage?wcaId=${it.id}&eventId=${eventId}&type=${type}&theme=${theme}"
+            if (typeList.contains(it.trim())) {
+                type = it.trim()
             }
-            if (result.startsWith("http://")) {
-                Msg.builder().image(result).sendToGroup(bot, groupId) // 找到精确一个人
-            } else {
-                bot.sendGroupMsg(groupId, result) // 范围太大
+            if (themeList.contains(it.trim())) {
+                theme = it.trim().replace("_", "-")
             }
-            return MESSAGE_BLOCK
-
         }
-        return super.onGroupMessage(bot, event)
+        val result = wcaService.handleWca(userId, q) {
+            "http://${ServiceConfig.self}/trend/getImage?wcaId=${it.id}&eventId=${eventId}&type=${type}&theme=${theme}"
+        }
+        if (result.startsWith("http://")) {
+            Msg.builder().image(result).sendToGroup(bot, groupId) // 找到精确一个人
+        } else {
+            bot.sendGroupMsg(groupId, result) // 范围太大
+        }
+        return MESSAGE_BLOCK
     }
 }

@@ -17,17 +17,13 @@ class RankPlugin : BotPlugin() {
 
     val findPersonUrl: String get() = "http://${ServiceConfig.rank}/getRank/person?wcaid="
 
-    @PrefixFilter(".")
+    @PrefixFilter([".rank"])
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
-        var rawMsg = event.rawMessage
         val groupId = event.groupId
-        if (rawMsg.startsWith("rank")) {
-            rawMsg = rawMsg.substring("rank".length).trim()
-            val url = "${findPersonUrl}${URLEncoder.encode(rawMsg, Charsets.UTF_8.name())}"
-            val retMsg = URL(url).readText(Charset.forName("GBK")).replace("#success", "")
-            bot.sendGroupMsg(groupId, retMsg)
-            return MESSAGE_BLOCK
-        }
-        return MESSAGE_IGNORE
+        val rawMsg = event.rawMessage.trim()
+        val url = "${findPersonUrl}${URLEncoder.encode(rawMsg, Charsets.UTF_8.name())}"
+        val retMsg = URL(url).readText(Charset.forName("GBK")).replace("#success", "")
+        bot.sendGroupMsg(groupId, retMsg)
+        return MESSAGE_BLOCK
     }
 }
