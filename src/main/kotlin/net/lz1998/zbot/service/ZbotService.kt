@@ -41,7 +41,7 @@ class ZbotService {
     }
 
     fun getBotId(groupId: Long): Long? {
-        return groupInfoMap[groupId]?.botId
+        return getMyGroupInfo(groupId)?.botId
     }
 
     @Synchronized

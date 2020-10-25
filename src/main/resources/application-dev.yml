@@ -16,6 +16,8 @@ zbot:
     self: localhost:8081
   api:
     express-app-code: xxx
+  jwt:
+    key: xxxx
 server:
   port: 8081
 spring:
