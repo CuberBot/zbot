@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface WcaGroupUserRepository : JpaRepository<WcaGroupUser, WcaGroupUserKey> {
     fun findWcaGroupUsersByGroupId(groupId: Long): List<WcaGroupUser>
     fun deleteWcaGroupUsersByGroupIdAndUserIdIn(groupId: Long, userIdList: List<Long>)
-    fun findWcaGroupUsersByGroupIdAndAttendIsTrue(groupId: Long, pageable: Pageable): Page<WcaGroupUser>
+    fun findWcaGroupUsersByGroupIdAndAttendIsTrue(groupId: Long): List<WcaGroupUser>
     fun findWcaGroupUserByGroupIdAndUserId(groupId: Long, userId: Long): WcaGroupUser?
     fun findWcaGroupUsersByGroupIdAndAttendIsTrueAndBanIsFalse(groupId: Long): List<WcaGroupUser>
 

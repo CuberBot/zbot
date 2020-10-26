@@ -6,7 +6,7 @@ import net.lz1998.pbbot.bot.Bot
 import net.lz1998.pbbot.bot.BotPlugin
 import net.lz1998.zbot.aop.annotations.PrefixFilter
 import net.lz1998.zbot.service.AuthService
-import net.lz1998.zbot.utils.isSuperAdmin
+import net.lz1998.zbot.service.isSuperAdmin
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

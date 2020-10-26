@@ -6,7 +6,7 @@ import net.lz1998.pbbot.bot.BotPlugin
 import net.lz1998.zbot.aop.annotations.PrefixFilter
 import net.lz1998.zbot.aop.annotations.SwitchFilter
 import net.lz1998.zbot.service.PluginSwitchService
-import net.lz1998.zbot.utils.isAdmin
+import net.lz1998.zbot.service.isAdmin
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

@@ -43,8 +43,8 @@ class WcaGroupService {
     }
 
     // 查询
-    fun getWcaGroupUserPage(groupId: Long, pageable: Pageable): Page<WcaGroupUser> {
-        return wcaGroupUserRepository.findWcaGroupUsersByGroupIdAndAttendIsTrue(groupId, pageable)
+    fun getWcaGroupUser(groupId: Long): List<WcaGroupUser> {
+        return wcaGroupUserRepository.findWcaGroupUsersByGroupIdAndAttendIsTrue(groupId)
     }
 
     // 群管理员使用，设置 统计开始时间、结束时间、是否禁止参与

@@ -80,10 +80,10 @@ message SetWcaGroupAttendResp{
 }
 
 // 获取一个群的所有WCA用户，数量不大，不分页
-message GetWcaGroupUserReq{
+message GetWcaGroupUsersReq{
   int64 group_id = 1;
 }
-message GetWcaGroupUserResp{
+message GetWcaGroupUsersResp{
   repeated WcaGroupUser users = 1;
   bool can_update = 2; // 是否有权限修改
   string group_name = 3; // 群名称
@@ -103,6 +103,6 @@ service HttpService{
   rpc UpdateWcaUser(UpdateWcaUserReq)returns (UpdateWcaUserResp);
   rpc GetWcaUserGroupList(GetWcaUserGroupListReq) returns (GetWcaUserGroupListResp);
   rpc SetWcaGroupAttend(SetWcaGroupAttendReq) returns (SetWcaGroupAttendResp);
-  rpc GetWcaGroupUser(GetWcaGroupUserReq) returns (GetWcaGroupUserResp);
+  rpc GetWcaGroupUsers(GetWcaGroupUsersReq) returns (GetWcaGroupUsersResp);
   rpc UpdateWcaGroupUser(UpdateWcaGroupUserReq) returns (UpdateWcaGroupUserResp);
 }
