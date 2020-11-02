@@ -38,3 +38,4 @@ application-test.yml
 src/main/java/dto/**
 .DS_Store
 .wakatime-project
+log/

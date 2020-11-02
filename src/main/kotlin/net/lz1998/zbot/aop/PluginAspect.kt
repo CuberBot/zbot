@@ -63,14 +63,22 @@ class PluginAspect {
         args.forEachIndexed { _, arg ->
             if (arg is GroupMessageEvent) {
                 val groupId = arg.groupId
-                val stop = pluginSwitchService.isPluginStop(groupId = groupId, pluginName = pluginName)
+                val stop = try {
+                    pluginSwitchService.isPluginStop(groupId = groupId, pluginName = pluginName)
+                } catch (e: Exception) {
+                    false
+                }
                 if (stop) {
                     return BotPlugin.MESSAGE_IGNORE
                 }
             }
             if (arg is GroupIncreaseNoticeEvent) {
                 val groupId = arg.groupId
-                val stop = pluginSwitchService.isPluginStop(groupId = groupId, pluginName = pluginName)
+                val stop = try {
+                    pluginSwitchService.isPluginStop(groupId = groupId, pluginName = pluginName)
+                } catch (e: Exception) {
+                    false
+                }
                 if (stop) {
                     return BotPlugin.MESSAGE_IGNORE
                 }

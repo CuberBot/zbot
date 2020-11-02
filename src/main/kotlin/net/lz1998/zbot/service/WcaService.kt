@@ -116,6 +116,19 @@ class WcaService {
         return true
     }
 
+    // 搜索WCA结果
+    //
+    // 如果根据关键字搜到多个结果，提供选项
+    // 12items
+    // 2016LIZH03|Zheng Li (李政)
+    // 2008LIZH02|Zheng Li (李政)
+    // 2019LIZH09|Zhengyi Li (李政逸)
+    // 2019LIZH06|Zhenghao Li (李政豪)
+    // 2018LIZH22|Zhenglin Li (李政霖)
+    // ...
+    //
+    // 如果搜到一个结果
+    // 使用 wcaPersonHandler (Java Interface/Kotlin Closure) 进一步处理成详细信息
     fun handleWca(userId: Long, q: String, wcaPersonHandler: (WcaPerson) -> (String)): String {
         // 查询自己的成绩，需要绑定
         var userId = userId
@@ -201,11 +214,11 @@ class WcaService {
     }
 
     private fun atDecode(msg: String): String {
-        // [mirai:at:875543533,@李政]
-        var msg = msg.split('@')[0]
-        msg = msg.replace("[mirai:at:", "")
-        msg = msg.replace(",", "")
-        msg = msg.trim { it <= ' ' }
+        // <at qq="875543533"/>
+        var msg = msg.trim()
+        msg = msg.replace("<at qq=\"", "")
+        msg = msg.replace("\"/>", "")
+        msg = msg.trim()
         return msg
     }
 
