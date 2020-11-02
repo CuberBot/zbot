@@ -28,13 +28,13 @@ class RepeatPlugin : BotPlugin() {
             return MESSAGE_IGNORE
         }
         val lastMsg = lastMsgMap.getOrDefault(groupId, "<null/>")
-        lastMsgMap[groupId] = rawMsg
-        if (lastMsg == rawMsg && rawMsg.length < 50) {
-            if (random.nextInt(100) % 10 == 0) {
-                lastRepeatTimeMap[groupId] = System.currentTimeMillis()
-                bot.sendGroupMsg(groupId, msg)
-                return MESSAGE_IGNORE
-            }
+        if (lastMsg != rawMsg) {
+            lastMsgMap[groupId] = rawMsg
+            return MESSAGE_IGNORE
+        } else if (rawMsg.length < 50 && random.nextInt(100) % 10 == 0) {
+            lastRepeatTimeMap[groupId] = System.currentTimeMillis()
+            bot.sendGroupMsg(groupId, msg)
+            return MESSAGE_IGNORE
         }
         return MESSAGE_IGNORE
     }
