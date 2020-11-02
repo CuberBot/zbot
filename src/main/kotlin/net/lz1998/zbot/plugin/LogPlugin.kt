@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component
 // TODO
 @Component
 class LogPlugin : BotPlugin() {
-    val privateMessageCounter = Metrics.counter("event", "type", "private_message")
-    val groupMessageCounter = Metrics.counter("event", "type", "group_message")
 
     val log: Logger = LoggerFactory.getLogger(this::class.java)
     val objMapper = ObjectMapper()
@@ -49,7 +47,12 @@ class LogPlugin : BotPlugin() {
 
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
 //        log.info("RECV GROUP_MSG {}", objMapper.writeValueAsString(event))
-        groupMessageCounter.increment()
+        Metrics.counter(
+                "event",
+                "type", "group_message",
+                "group_id", event.groupId.toString(),
+                "user_id", event.userId.toString()
+        ).increment()
         log.info("RECV GROUP MSG groupId={} userId={} msg={}", event.groupId, event.userId, event.rawMessage)
         return super.onGroupMessage(bot, event)
     }
@@ -64,7 +67,10 @@ class LogPlugin : BotPlugin() {
 
     override fun onPrivateMessage(bot: Bot, event: PrivateMessageEvent): Int {
 //        log.info("RECV PRIVATE_MSG {}", objMapper.writeValueAsString(event))
-        privateMessageCounter.increment()
+        Metrics.counter("event",
+                "type", "private_message",
+                "user_id", event.userId.toString()
+        ).increment()
         log.info("RECV PRIVATE MSG userId={} msg={}", event.userId, event.rawMessage)
         return super.onPrivateMessage(bot, event)
     }
