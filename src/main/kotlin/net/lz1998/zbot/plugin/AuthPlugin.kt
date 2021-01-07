@@ -15,6 +15,9 @@ class AuthPlugin : BotPlugin() {
     @Autowired
     lateinit var authService: AuthService
 
+    var lastNoticeTimeMap = mutableMapOf<Long, Long>()
+    val noticeInterval = 600000 // 如果未授权，提示间隔
+
     @PrefixFilter(".")
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val userId = event.userId
@@ -45,7 +48,12 @@ class AuthPlugin : BotPlugin() {
         return if (authService.isAuth(groupId)) {
             MESSAGE_IGNORE
         } else {
-            // TODO 提示
+            val lastNoticeTime = lastNoticeTimeMap.getOrDefault(groupId, 0)
+            val now = System.currentTimeMillis()
+            if (now - lastNoticeTime > noticeInterval) {
+                lastNoticeTimeMap[groupId] = now
+                bot.sendGroupMsg(groupId, "未授权，有问题进群374735267")
+            }
             MESSAGE_BLOCK
         }
     }
