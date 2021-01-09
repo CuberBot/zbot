@@ -4,6 +4,7 @@ import net.lz1998.pbbot.alias.GroupMessageEvent
 import net.lz1998.pbbot.bot.Bot
 import net.lz1998.pbbot.bot.BotPlugin
 import net.lz1998.zbot.aop.annotations.PrefixFilter
+import net.lz1998.zbot.config.ZbotConfig
 import net.lz1998.zbot.service.BlackService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -18,6 +19,9 @@ class BlackPlugin : BotPlugin() {
         val groupId = event.groupId
         val userId = event.userId
         val rawMsg = event.rawMessage
+        if (ZbotConfig.adminGroupId == groupId) {
+            return MESSAGE_IGNORE
+        }
         if (blackService.isBlack(userId)) {
             return MESSAGE_BLOCK
         }
