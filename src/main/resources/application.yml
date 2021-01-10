@@ -33,7 +33,7 @@ spring:
     event:
       max-pool-size: 50
       core-pool-size: 30
-      work-queue-size: 1024
+      work-queue-size: 10240
       keep-alive-time: 2000
 management:
   endpoints:
