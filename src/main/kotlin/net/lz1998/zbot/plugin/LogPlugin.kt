@@ -54,7 +54,7 @@ class LogPlugin : BotPlugin() {
                 "user_id", event.userId.toString(),
                 "role", event.sender.role,
         ).increment()
-        log.info("RECV GROUP MSG groupId={} userId={} msg={}", event.groupId, event.userId, event.rawMessage)
+        log.info("RECV GROUP MSG botId={} groupId={} userId={} msg={}", bot.selfId, event.groupId, event.userId, event.rawMessage)
         return super.onGroupMessage(bot, event)
     }
 
@@ -72,7 +72,7 @@ class LogPlugin : BotPlugin() {
                 "self_id", bot.selfId.toString(),
                 "user_id", event.userId.toString()
         ).increment()
-        log.info("RECV PRIVATE MSG userId={} msg={}", event.userId, event.rawMessage)
+        log.info("RECV PRIVATE MSG botId={} userId={} msg={}", bot.selfId, event.userId, event.rawMessage)
         return super.onPrivateMessage(bot, event)
     }
 }

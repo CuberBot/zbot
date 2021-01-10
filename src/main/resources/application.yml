@@ -30,6 +30,11 @@ spring:
       - net.lz1998.zbot.plugin.WelcomePlugin # 入群欢迎
       - net.lz1998.zbot.plugin.LearnPlugin # 学习 自定义回复内容
       - net.lz1998.zbot.plugin.ExpressPlugin # 快递
+    event:
+      max-pool-size: 50
+      core-pool-size: 30
+      work-queue-size: 1024
+      keep-alive-time: 2000
 management:
   endpoints:
     web:
