@@ -30,16 +30,16 @@ class PBlockPlugin : BotPlugin() {
             rawMsg = rawMsg.substring("屏蔽+".length).trim()
             rawMsg.toLongOrNull()?.also {
                 pBlockService.setPBlock(userId = it, isPBlock = true, adminId = userId)
-                bot.sendGroupMsg(group_id = groupId, message = randoms.toString())
-            } ?: bot.sendGroupMsg(group_id = groupId, message = faileds.toString())
+                bot.sendGroupMsg(group_id = groupId, message = "屏蔽成功")
+            } ?: bot.sendGroupMsg(group_id = groupId, message = "格式错误")
             return MESSAGE_BLOCK
         }
         if (rawMsg.startsWith("屏蔽-") && isSuperAdmin(userId)) {
             rawMsg = rawMsg.substring("屏蔽-".length).trim()
             rawMsg.toLongOrNull()?.also {
                 pBlockService.setPBlock(userId = it, isPBlock = false, adminId = userId)
-                bot.sendGroupMsg(group_id = groupId, message = randoms.toString())
-            } ?: bot.sendGroupMsg(group_id = groupId, message = faileds.toString())
+                bot.sendGroupMsg(group_id = groupId, message = "屏蔽成功")
+            } ?: bot.sendGroupMsg(group_id = groupId, message = "格式错误")
             return MESSAGE_BLOCK
         }
         return if (pBlockService.isPBlock(puserId)) {
