@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.CachePut
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 @CacheConfig(cacheNames = ["auth"])
@@ -17,6 +19,12 @@ class AuthService {
     @Cacheable(key = "#groupId")
     fun isAuth(groupId: Long): Boolean {
         return authRepository.findAuthByGroupId(groupId)?.isAuth ?: false
+    }
+
+    @Transactional
+    @Modifying
+    fun isDelete(groupId: Long) {
+        return authRepository.deleteAuthByGroupId(groupId)
     }
 
     @CachePut(key = "#groupId")
