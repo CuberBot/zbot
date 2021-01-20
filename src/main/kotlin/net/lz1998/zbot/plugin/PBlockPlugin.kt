@@ -20,8 +20,6 @@ class PBlockPlugin : BotPlugin() {
         val groupId = event.groupId
         val puserId = event.sender.userId
         var rawMsg = event.rawMessage.trim()
-        val randoms = (0..100).random()
-        val faileds = (400..500).random()
 
         rawMsg = rawMsg.replace("<at qq=\"", "")
         rawMsg = rawMsg.replace("\"/>", "")
