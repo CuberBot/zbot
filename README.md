@@ -5,11 +5,14 @@
 ## 功能
 - [x] 授权 Auth
 - [x] 黑名单 Black
+- [x] 个人永久屏蔽 PBlack
 - [x] 复读 Repeat
 - [x] web 登陆注册 Security
 - [x] 开关 Switch
 - [x] 入群欢迎 Welcome
 - [x] 生成魔方打乱 Scramble
+- [x] 生成魔方多打乱 Tnos
+- [x] 生成魔方中文打乱 Scramble
 - [x] WCA 成绩查询 Wca
 - [x] WCA 排名查询 Rank
 - [x] 粗饼链接 Link
@@ -22,7 +25,7 @@
 - [x] 快递 Express
 - [ ] WCA群纪录 GroupRecord
 - [ ] WCA群排名 GroupRank
-- [ ] 群管 Admin
+- [x] 群管 Admin
 
 ## 使用方式
 1. 下载 [Go-Mirai-Client](https://github.com/ProtobufBot/Go-Mirai-Client/releases) / [Spring-Mirai-Client](https://github.com/ProtobufBot/Spring-Mirai-Client/releases) 到服务器，并运行 `chmod +x Go-Mirai-Client && ./Go-Mirai-Client` / `java jar spring-mirai-client-版本.jar` ，浏览器打开`http://服务器地址:9000`，输入管理账号密码(默认admin/123456)，登陆机器人并处理验证码

@@ -17,6 +17,7 @@ spring:
       - net.lz1998.zbot.plugin.BlackPlugin # 黑名单
       - net.lz1998.zbot.plugin.RepeatPlugin # 复读
       - net.lz1998.zbot.plugin.SecurityPlugin # 网页验证码
+      - net.lz1998.zbot.plugin.PBlockPlugin # 个人永久屏蔽
       - net.lz1998.zbot.plugin.SwitchPlugin # 开关
       - net.lz1998.zbot.plugin.ScramblePlugin # 打乱
       - net.lz1998.zbot.plugin.WcaPlugin # WCA 成绩
