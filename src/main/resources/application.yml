@@ -18,9 +18,6 @@ spring:
       - net.lz1998.zbot.plugin.RepeatPlugin # 复读
       - net.lz1998.zbot.plugin.SecurityPlugin # 网页验证码
       - net.lz1998.zbot.plugin.SwitchPlugin # 开关
-      - net.lz1998.zbot.plugin.PBlockPlugin # 个人永久屏蔽
-      - net.lz1998.zbot.plugin.TnosPlugin #多打乱
-      - net.lz1998.zbot.plugin.Scramble #中文打乱
       - net.lz1998.zbot.plugin.ScramblePlugin # 打乱
       - net.lz1998.zbot.plugin.WcaPlugin # WCA 成绩
       - net.lz1998.zbot.plugin.RankPlugin # WCA 排名
@@ -31,9 +28,9 @@ spring:
       - net.lz1998.zbot.plugin.CuberPlugin # 粗饼比赛选手
       - net.lz1998.zbot.plugin.CubepicPlugin # 生成魔方图
       - net.lz1998.zbot.plugin.WelcomePlugin # 入群欢迎
+      - net.lz1998.zbot.plugin.BanPlugin #群管
       - net.lz1998.zbot.plugin.LearnPlugin # 学习 自定义回复内容
       - net.lz1998.zbot.plugin.ExpressPlugin # 快递
-      - net.lz1998.zbot.plugin.BanPlugin #群管
     event:
       max-pool-size: 300
       core-pool-size: 20
