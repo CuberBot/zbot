@@ -48,7 +48,7 @@ class AuthPlugin : BotPlugin() {
         if(rawMsg.startsWith("退群") && isSuperAdmin(userId)){
             rawMsg = rawMsg.substring("退群".length).trim()
             rawMsg.toLongOrNull()?.also {
-                authService.isDelete(groupId = it)
+                authService.setAuth(groupId = it, isAuth = false, adminId = userId)
                 bot.sendGroupMsg(group_id = groupId, message = "退群成功")
                 bot.setGroupLeave(group_id = it,is_dismiss = false)
             }
