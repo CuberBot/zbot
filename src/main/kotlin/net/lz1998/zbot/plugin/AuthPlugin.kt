@@ -45,12 +45,12 @@ class AuthPlugin : BotPlugin() {
             } ?: bot.sendGroupMsg(group_id = groupId, message = "群号错误")
             return MESSAGE_BLOCK
         }
-        if(rawMsg.startsWith("退群") && isSuperAdmin(userId)){
+        if (rawMsg.startsWith("退群") && isSuperAdmin(userId)) {
             rawMsg = rawMsg.substring("退群".length).trim()
             rawMsg.toLongOrNull()?.also {
                 authService.setAuth(groupId = it, isAuth = false, adminId = userId)
                 bot.sendGroupMsg(group_id = groupId, message = "退群成功")
-                bot.setGroupLeave(group_id = it,is_dismiss = false)
+                bot.setGroupLeave(group_id = it, is_dismiss = true) // 如果有人转让群主，解散
             }
             return MESSAGE_BLOCK
         }
