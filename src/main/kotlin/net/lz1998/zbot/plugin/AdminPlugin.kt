@@ -6,9 +6,7 @@ import net.lz1998.pbbot.bot.BotPlugin
 import net.lz1998.pbbot.utils.Msg
 import net.lz1998.zbot.aop.annotations.PrefixFilter
 import net.lz1998.zbot.aop.annotations.SwitchFilter
-import net.lz1998.zbot.service.PermissionService
 import net.lz1998.zbot.service.isAdmin
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 // 禁言 + 踢人功能
