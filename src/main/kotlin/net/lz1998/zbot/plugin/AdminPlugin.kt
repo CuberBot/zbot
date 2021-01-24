@@ -14,6 +14,13 @@ import org.springframework.stereotype.Component
 @SwitchFilter("群管")
 class AdminPlugin : BotPlugin() {
 
+    companion object {
+        const val DAY_RATE = 24 * 60 * 60
+        const val HOUR_RATE = 60 * 60
+        const val MIN_RATE = 60
+        const val SEC_RATE = 1
+    }
+
     @PrefixFilter(".")
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
         val groupId = event.groupId
@@ -48,10 +55,10 @@ class AdminPlugin : BotPlugin() {
             match.findAll(str).forEach {
                 val num = it.groupValues[1].toInt()
                 val rate = when (it.groupValues[2]) {
-                    "d" -> 24 * 60 * 60
-                    "h" -> 60 * 60
-                    "m" -> 60
-                    "s" -> 1
+                    "d" -> DAY_RATE
+                    "h" -> HOUR_RATE
+                    "m" -> MIN_RATE
+                    "s" -> SEC_RATE
                     else -> 0
                 }
                 duration += num * rate
@@ -62,10 +69,13 @@ class AdminPlugin : BotPlugin() {
                 return MESSAGE_BLOCK
             }
 
-            // TODO 时间计算 duration -> 时间长度字符串
-            return if (duration in 1..(30 * 24 * 60 * 60)) {
+            return if (duration < 30 * DAY_RATE) {
                 bot.setGroupBan(groupId, banId, duration)
-                Msg.builder().text("已禁言").at(banId).sendToGroup(bot, groupId)
+                val day = duration / DAY_RATE
+                val hour = (duration % DAY_RATE) / HOUR_RATE
+                val min = (duration % HOUR_RATE) / MIN_RATE
+                val sec = duration % MIN_RATE
+                Msg.builder().text("已禁言").at(banId).text(getTimeStr(day, hour, min, sec)).sendToGroup(bot, groupId)
                 MESSAGE_BLOCK
             } else {
                 bot.sendGroupMsg(groupId, "禁言时间超过允许范围")
@@ -87,5 +97,9 @@ class AdminPlugin : BotPlugin() {
             return MESSAGE_BLOCK
         }
         return MESSAGE_IGNORE
+    }
+
+    final fun getTimeStr(day: Int, hour: Int, min: Int, sec: Int): String {
+        return (if (day != 0) "${day}天" else "") + (if (hour != 0) "${hour}小时" else "") + (if (min != 0) "${min}分钟" else "") + (if (sec != 0) "${sec}秒" else "")
     }
 }
