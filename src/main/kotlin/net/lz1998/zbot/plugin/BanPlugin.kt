@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 import java.lang.StringBuilder
 
 @Component
-@SwitchFilter("临时群管")
+@SwitchFilter("群管")
 class BanTempPlugin: BotPlugin() {
 
     @Autowired
