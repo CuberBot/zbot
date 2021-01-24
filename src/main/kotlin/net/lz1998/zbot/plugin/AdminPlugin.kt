@@ -43,21 +43,18 @@ class AdminPlugin : BotPlugin() {
                     .replace("分", "m")
                     .replace("秒", "s")
                     .trim()
-            val match = Regex("(\\d)([dhms])")
             var duration = 0
+            val match = Regex("(\\d)([dhms])")
             match.findAll(str).forEach {
-                // FIXME 这里转换toInt 有一定风险 abcd，"abc".toInt() 需要改为toIntOrNull
-                if (it.value.endsWith("d")) {
-                    duration += it.value.replace("d", "").toInt() * 24 * 60 * 60
-                } else if (it.value.endsWith("h")) {
-                    duration += it.value.replace("h", "").toInt() * 60 * 60
-                } else if (it.value.endsWith("m")) {
-                    duration += it.value.replace("m", "").toInt() * 60
-                } else if (it.value.endsWith("s")) {
-                    duration += it.value.replace("s", "").toInt()
-                } else {
-                    duration += it.value.toInt()
+                val num = it.groupValues[1].toInt()
+                val rate = when (it.groupValues[2]) {
+                    "d" -> 24 * 60 * 60
+                    "h" -> 60 * 60
+                    "m" -> 60
+                    "s" -> 1
+                    else -> 0
                 }
+                duration += num * rate
             }
             if (duration <= 0) {
                 bot.setGroupBan(groupId, banId, 0)
