@@ -20,6 +20,9 @@ import java.net.URLEncoder
 @SwitchFilter("打乱")
 class ScramblePlugin : BotPlugin() {
 
+    var ins = ""
+    var rate = 0
+
     @Autowired
     lateinit var scrambleService: ScrambleService
 
@@ -42,15 +45,31 @@ class ScramblePlugin : BotPlugin() {
         val groupId = event.groupId
         val rawMsg = event.rawMessage
 
+        getInsAndRate(rawMsg)
+
         for (puzzle in TNoodleEnum.values()) {
-            if (rawMsg == puzzle.instruction) {
+            if (ins == puzzle.instruction) {
                 return try {
-                    val scramble = getScramble(puzzle)
-                    val imgUrl = "http://${ServiceConfig.tnoodle}/view/${puzzle.shortName}.png?scramble=" + URLEncoder.encode(scramble, "utf-8")
-                    Msg.builder()
+                    if(rate == 1) {
+                        val scramble = getScramble(puzzle)
+                        val imgUrl =
+                            "http://${ServiceConfig.tnoodle}/view/${puzzle.shortName}.png?scramble=" + URLEncoder.encode(
+                                scramble,
+                                "utf-8"
+                            )
+                        Msg.builder()
                             .text("${puzzle.showName}\n${scramble}\n")
                             .image(imgUrl)
                             .sendToGroup(bot, groupId)
+                    }else if(ins == "2" || ins == "3" || ins == "py" || ins == "sk" || ins == "cl" || ins == "fm"){
+                        var sendResult = StringBuilder()
+                        for(i in 1..rate) {
+                            sendResult = sendResult.append("\n").append(i).append(".  ").append(getScramble(puzzle))
+                        }
+                        Msg.builder()
+                            .text("${puzzle.showName}*$rate${sendResult}")
+                            .sendToGroup(bot, groupId)
+                    }
                     MESSAGE_BLOCK
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -61,7 +80,7 @@ class ScramblePlugin : BotPlugin() {
         }
 
         for (puzzle in SlidysimEnum.values()) {
-            if (rawMsg == puzzle.instruction) {
+            if (ins == puzzle.instruction) {
                 return try {
                     val scramble = scrambleService.getScrambleSlidysim(puzzle.n)
                     val retMsg = "${puzzle.showName}\n${scramble}"
@@ -75,7 +94,18 @@ class ScramblePlugin : BotPlugin() {
                 }
             }
         }
-
         return MESSAGE_IGNORE
+    }
+    fun getInsAndRate(str: String) {
+        val matchIns = Regex("[A-Za-z0-9]+")
+        val matchRate = Regex("([*])([0-9]+)")
+        val resultIns = matchIns.find(str)?.value ?: str
+        val resultRate = matchRate.find(str)?.value
+            ins = resultIns
+        if (resultRate != null){
+            if(resultRate.substring(1).toInt() > 1 && resultRate.substring(1).toInt() < 6){
+                rate = resultRate.substring(1).toInt()
+            } else if (resultRate.substring(1).toInt() > 5 ) { rate = 5 }
+        }else rate = 1
     }
 }
