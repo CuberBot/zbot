@@ -1,0 +1,195 @@
+package net.lz1998.zbot.plugin
+
+import net.lz1998.pbbot.alias.GroupMessageEvent
+import net.lz1998.pbbot.bot.Bot
+import net.lz1998.pbbot.bot.BotPlugin
+import net.lz1998.pbbot.utils.Msg
+import net.lz1998.zbot.aop.annotations.PrefixFilter
+import net.lz1998.zbot.aop.annotations.SwitchFilter
+//import net.lz1998.zbot.service.isAdmin
+import org.springframework.stereotype.Component
+
+@Component
+@SwitchFilter("闪秀图")
+class ShowOrFlashPlugin: BotPlugin() {
+
+    @PrefixFilter(".")
+    override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
+
+        val groupId = event.groupId
+//        val userId = event.userId
+        val rawMsg = event.rawMessage
+
+//        if(isAdmin(event.sender)) {
+            if (rawMsg.startsWith("秀图")) {
+                // 40000 秀图
+                // 40001 幻影
+                // 40002 抖动
+                // 40003 生日
+                // 40004 爱你
+                // 40005 征友
+                val m = Regex("<image")
+                var count = 0
+                m.findAll(rawMsg).forEach {
+                    count++
+                }
+                if (count == 1) {
+                    val showUrlMatch = Regex("http://.*\"/>")
+                    val r = showUrlMatch.find(rawMsg)?.value?.replace("\"/>", "")
+                    if (r != null) {
+                        Msg.builder().show(r, 40000).sendToGroup(bot, groupId)
+                        return MESSAGE_BLOCK
+                    }
+                } else {
+                    bot.sendGroupMsg(groupId, "秀图图片只能为1张")
+                    return MESSAGE_BLOCK
+                }
+            }
+
+            if (rawMsg.startsWith("秀幻影")) {
+                // 40000 秀图
+                // 40001 幻影
+                // 40002 抖动
+                // 40003 生日
+                // 40004 爱你
+                // 40005 征友
+                val m = Regex("<image")
+                var count = 0
+                m.findAll(rawMsg).forEach {
+                    count++
+                }
+                if (count == 1) {
+                    val showUrlMatch = Regex("http://.*\"/>")
+                    val r = showUrlMatch.find(rawMsg)?.value?.replace("\"/>", "")
+                    if (r != null) {
+                        Msg.builder().show(r, 40001).sendToGroup(bot, groupId)
+                        return MESSAGE_BLOCK
+                    }
+                } else {
+                    bot.sendGroupMsg(groupId, "秀图图片只能为1张")
+                    return MESSAGE_BLOCK
+                }
+            }
+
+            if (rawMsg.startsWith("秀抖动")) {
+                // 40000 秀图
+                // 40001 幻影
+                // 40002 抖动
+                // 40003 生日
+                // 40004 爱你
+                // 40005 征友
+                val m = Regex("<image")
+                var count = 0
+                m.findAll(rawMsg).forEach {
+                    count++
+                }
+                if (count == 1) {
+                    val showUrlMatch = Regex("http://.*\"/>")
+                    val r = showUrlMatch.find(rawMsg)?.value?.replace("\"/>", "")
+                    if (r != null) {
+                        Msg.builder().show(r, 40002).sendToGroup(bot, groupId)
+                        return MESSAGE_BLOCK
+                    }
+                } else {
+                    bot.sendGroupMsg(groupId, "秀图图片只能为1张")
+                    return MESSAGE_BLOCK
+                }
+            }
+
+            if (rawMsg.startsWith("秀生日")) {
+                // 40000 秀图
+                // 40001 幻影
+                // 40002 抖动
+                // 40003 生日
+                // 40004 爱你
+                // 40005 征友
+                val m = Regex("<image")
+                var count = 0
+                m.findAll(rawMsg).forEach {
+                    count++
+                }
+                if (count == 1) {
+                    val showUrlMatch = Regex("http://.*\"/>")
+                    val r = showUrlMatch.find(rawMsg)?.value?.replace("\"/>", "")
+                    if (r != null) {
+                        Msg.builder().show(r, 40003).sendToGroup(bot, groupId)
+                        return MESSAGE_BLOCK
+                    }
+                } else {
+                    bot.sendGroupMsg(groupId, "秀图图片只能为1张")
+                    return MESSAGE_BLOCK
+                }
+            }
+
+            if (rawMsg.startsWith("秀爱你")) {
+                // 40000 秀图
+                // 40001 幻影
+                // 40002 抖动
+                // 40003 生日
+                // 40004 爱你
+                // 40005 征友
+                val m = Regex("<image")
+                var count = 0
+                m.findAll(rawMsg).forEach {
+                    count++
+                }
+                if (count == 1) {
+                    val showUrlMatch = Regex("http://.*\"/>")
+                    val r = showUrlMatch.find(rawMsg)?.value?.replace("\"/>", "")
+                    if (r != null) {
+                        Msg.builder().show(r, 40004).sendToGroup(bot, groupId)
+                        return MESSAGE_BLOCK
+                    }
+                } else {
+                    bot.sendGroupMsg(groupId, "秀图图片只能为1张")
+                    return MESSAGE_BLOCK
+                }
+            }
+
+            if (rawMsg.startsWith("秀征友")) {
+                // 40000 秀图
+                // 40001 幻影
+                // 40002 抖动
+                // 40003 生日
+                // 40004 爱你
+                // 40005 征友
+                val m = Regex("<image")
+                var count = 0
+                m.findAll(rawMsg).forEach {
+                    count++
+                }
+                if (count == 1) {
+                    val showUrlMatch = Regex("http://.*\"/>")
+                    val r = showUrlMatch.find(rawMsg)?.value?.replace("\"/>", "")
+                    if (r != null) {
+                        Msg.builder().show(r, 40005).sendToGroup(bot, groupId)
+                        return MESSAGE_BLOCK
+                    }
+                } else {
+                    bot.sendGroupMsg(groupId, "秀图图片只能为1张")
+                    return MESSAGE_BLOCK
+                }
+            }
+
+            if (rawMsg.startsWith("闪图")) {
+                val m = Regex("<image")
+                var count = 0
+                m.findAll(rawMsg).forEach {
+                    count++
+                }
+                if (count == 1) {
+                    val showUrlMatch = Regex("http://.*\"/>")
+                    val r = showUrlMatch.find(rawMsg)?.value?.replace("\"/>", "")
+                    if (r != null) {
+                        Msg.builder().flash(r).sendToGroup(bot, groupId)
+                        return MESSAGE_BLOCK
+                    }
+                } else {
+                    bot.sendGroupMsg(groupId, "闪图只能为1张")
+                    return MESSAGE_BLOCK
+                }
+            }
+//        }
+    return MESSAGE_IGNORE
+    }
+}
