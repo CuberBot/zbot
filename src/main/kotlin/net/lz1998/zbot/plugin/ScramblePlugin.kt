@@ -24,7 +24,7 @@ class ScramblePlugin : BotPlugin() {
     lateinit var scrambleService: ScrambleService
 
     fun getScramble(type: TNoodleEnum): String? {
-        var scramble: String = URL("http://${ServiceConfig.tnoodle}/scramble/.txt?=${type.shortName}").readText()
+        var scramble: String = URL("http://${ServiceConfig.scramble}/scramble/${type.shortName}").readText()
         scramble = scramble.replace("\r", "")
         if (scramble.endsWith("\n")) {
             scramble = scramble.substring(0, scramble.length - 1)
@@ -46,7 +46,7 @@ class ScramblePlugin : BotPlugin() {
             if (rawMsg == puzzle.instruction) {
                 return try {
                     val scramble = getScramble(puzzle)
-                    val imgUrl = "http://${ServiceConfig.tnoodle}/view/${puzzle.shortName}.png?scramble=" + URLEncoder.encode(scramble, "utf-8")
+                    val imgUrl = "http://${ServiceConfig.scramble}/view/${puzzle.shortName}?format=png&scramble=" + URLEncoder.encode(scramble, "utf-8")
                     Msg.builder()
                             .text("${puzzle.showName}\n${scramble}\n")
                             .image(imgUrl)

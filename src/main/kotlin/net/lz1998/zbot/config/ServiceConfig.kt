@@ -10,6 +10,9 @@ object ServiceConfig {
     @Value("\${zbot.service.tnoodle}")
     var tnoodle = "tnoodle.lz1998.xin"
 
+    @Value("\${zbot.service.scramble}")
+    var scramble = "scramble.lz1998.xin:12014"
+
     @Value("\${zbot.service.wcads}")
     var wcads = "wcads.lz1998.xin"
 
