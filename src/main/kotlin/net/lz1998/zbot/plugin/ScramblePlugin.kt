@@ -23,15 +23,11 @@ class ScramblePlugin : BotPlugin() {
     @Autowired
     lateinit var scrambleService: ScrambleService
 
-    fun getScramble(type: TNoodleEnum): String? {
+    fun getScramble(type: TNoodleEnum): String {
         var scramble: String = URL("http://${ServiceConfig.scramble}/scramble/${type.shortName}").readText()
         scramble = scramble.replace("\r", "")
         if (scramble.endsWith("\n")) {
             scramble = scramble.substring(0, scramble.length - 1)
-        }
-        if ("minx" == type.shortName) {
-            scramble = scramble.replace("U' ", "U'\n")
-            scramble = scramble.replace("U ", "U\n")
         }
         return scramble
     }
