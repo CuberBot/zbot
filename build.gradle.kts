@@ -51,6 +51,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC")
     implementation("net.lz1998:pbbot-spring-boot-starter:0.0.23")
+    implementation("com.volcengine:volc-sdk-java:1.0.17")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
 
     kapt("org.springframework.boot:spring-boot-configuration-processor")
