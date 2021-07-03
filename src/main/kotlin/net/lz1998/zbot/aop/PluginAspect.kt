@@ -35,6 +35,7 @@ class PluginAspect {
                 var firstText = arg.messageList.first().dataMap["text"] ?: return BotPlugin.MESSAGE_IGNORE
                 rawMessage = rawMessage.substring(prefix.length)
                 firstText = firstText.substring(prefix.length)
+                eventBuilder.removeMessage(0)
                 eventBuilder.addMessage(0, Message.newBuilder().setType("text").putData("text", firstText).build())
                 eventBuilder.rawMessage = rawMessage
                 args[index] = eventBuilder.build()
@@ -48,6 +49,7 @@ class PluginAspect {
                 var firstText = arg.messageList.first().dataMap["text"] ?: return BotPlugin.MESSAGE_IGNORE
                 rawMessage = rawMessage.substring(prefix.length)
                 firstText = firstText.substring(prefix.length)
+                eventBuilder.removeMessage(0)
                 eventBuilder.addMessage(0, Message.newBuilder().setType("text").putData("text", firstText).build())
                 eventBuilder.rawMessage = rawMessage
                 args[index] = eventBuilder.build()
