@@ -24,7 +24,11 @@ class ScramblePlugin : BotPlugin() {
     lateinit var scrambleService: ScrambleService
 
     fun getScramble(type: TNoodleEnum): String {
-        var scramble: String = URL("http://${ServiceConfig.scramble}/scramble/${type.shortName}").readText()
+        val conn = URL("http://${ServiceConfig.scramble}/scramble/${type.shortName}").openConnection()
+        conn.readTimeout = 5000
+        conn.connectTimeout = 5000
+        conn.connect()
+        var scramble: String = conn.getInputStream().reader().readText()
         scramble = scramble.replace("\r", "")
         if (scramble.endsWith("\n")) {
             scramble = scramble.substring(0, scramble.length - 1)
