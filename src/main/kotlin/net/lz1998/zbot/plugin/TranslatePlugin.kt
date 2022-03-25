@@ -72,7 +72,8 @@ class TranslatePlugin : BotPlugin() {
         "sl",
         "ur",
         "lv",
-        "af"
+        "af",
+        "lzh"
     )
 
     /**
