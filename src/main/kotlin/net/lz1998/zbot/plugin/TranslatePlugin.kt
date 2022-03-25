@@ -89,13 +89,20 @@ class TranslatePlugin : BotPlugin() {
         val groupId = event.groupId
         if (rawMsg.startsWith("翻译")) {
             rawMsg = rawMsg.substring("翻译".length)
-            if (rawMsg.length < 2) {
+            // 获取目标语种
+            var targetLanguage = ""
+            supportedLanguages.forEach {
+                if (rawMsg.startsWith(it)){
+                    targetLanguage=it
+                    return@forEach
+                }
+            }
+
+            if (targetLanguage.isEmpty()) {
                 bot.sendGroupMsg(groupId, "格式错误: .翻译<语种><内容>\n语种: https://www.volcengine.com/docs/4640/35107")
                 return MESSAGE_BLOCK
             }
 
-            // 获取目标语种
-            val targetLanguage = rawMsg.substring(0, 2)
             if (!supportedLanguages.contains(targetLanguage)) {
                 bot.sendGroupMsg(groupId, "格式错误: .翻译<语种><内容>\n语种: https://www.volcengine.com/docs/4640/35107")
                 return MESSAGE_BLOCK
@@ -105,7 +112,7 @@ class TranslatePlugin : BotPlugin() {
             val textList = mutableListOf<String>()
             event.messageList.filter { it.type == "text" }.withIndex().forEach { (i, it) ->
                 if (i == 0) {
-                    textList.add(it.dataMap["text"]?.substring("翻译".length + 2)?.trim() ?: "")
+                    textList.add(it.dataMap["text"]?.substring("翻译".length + targetLanguage.length)?.trim() ?: "")
                 } else {
                     textList.add(it.dataMap["text"] ?: "")
                 }
