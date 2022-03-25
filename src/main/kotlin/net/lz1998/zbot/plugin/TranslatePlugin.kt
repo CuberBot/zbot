@@ -76,6 +76,8 @@ class TranslatePlugin : BotPlugin() {
         "lzh"
     )
 
+    val reg=Regex("^翻译(([a-z]{2,3}):)?([a-z]{2,3})(.+)")
+
     /**
      * 收到群消息时调用此方法
      *
@@ -88,48 +90,29 @@ class TranslatePlugin : BotPlugin() {
         var rawMsg = event.rawMessage
         val groupId = event.groupId
         if (rawMsg.startsWith("翻译")) {
-            rawMsg = rawMsg.substring("翻译".length)
-            // 获取目标语种
-            var targetLanguage = ""
-            supportedLanguages.forEach {
-                if (rawMsg.startsWith(it)){
-                    targetLanguage=it
-                    return@forEach
-                }
-            }
-
-            if (targetLanguage.isEmpty()) {
+            val result=reg.matchEntire(rawMsg);
+            if(result==null){
                 bot.sendGroupMsg(groupId, "格式错误: .翻译<语种><内容>\n语种: https://www.volcengine.com/docs/4640/35107")
                 return MESSAGE_BLOCK
             }
-
-            if (!supportedLanguages.contains(targetLanguage)) {
+            val (_,_,sourceLanguage,targetLanguage,text)=result.groupValues
+            if (!supportedLanguages.contains(targetLanguage)){
                 bot.sendGroupMsg(groupId, "格式错误: .翻译<语种><内容>\n语种: https://www.volcengine.com/docs/4640/35107")
                 return MESSAGE_BLOCK
             }
-
-            // 获取所有文本
-            val textList = mutableListOf<String>()
-            event.messageList.filter { it.type == "text" }.withIndex().forEach { (i, it) ->
-                if (i == 0) {
-                    textList.add(it.dataMap["text"]?.substring("翻译".length + targetLanguage.length)?.trim() ?: "")
-                } else {
-                    textList.add(it.dataMap["text"] ?: "")
-                }
+            if (sourceLanguage.isNotEmpty() &&!supportedLanguages.contains(sourceLanguage)){
+                bot.sendGroupMsg(groupId, "格式错误: .翻译<语种><内容>\n语种: https://www.volcengine.com/docs/4640/35107")
+                return MESSAGE_BLOCK
             }
-
             // 翻译
             val req = TranslateTextRequest()
+            req.sourceLanguage = sourceLanguage
             req.targetLanguage = targetLanguage
-            req.textList = textList
+            req.textList = listOf(text)
             val resp = translateService.translateText(req)
-            if (resp.translationList == null || resp.translationList.size < textList.size) {
+            if (resp.translationList == null || resp.translationList.size < 1) {
                 bot.sendGroupMsg(groupId, "翻译错误")
                 return MESSAGE_BLOCK
-            }
-            var sourceLanguage = "zh"
-            if (resp.translationList.size > 0) {
-                sourceLanguage = resp.translationList[0].detectedSourceLanguage
             }
 
             // 贴回内容，图片使用controller传参翻译
@@ -144,15 +127,15 @@ class TranslatePlugin : BotPlugin() {
                             msg.text("")
                         }
                     }
-                    "image" -> {
-                        msg.image(
-                            "http://${ServiceConfig.self}/translate/image?sourceLanguage=$sourceLanguage&targetLanguage=$targetLanguage&url=${
-                                URLEncoder.encode(
-                                    it.dataMap["url"]
-                                )
-                            }"
-                        )
-                    }
+//                    "image" -> {
+//                        msg.image(
+//                            "http://${ServiceConfig.self}/translate/image?sourceLanguage=$sourceLanguage&targetLanguage=$targetLanguage&url=${
+//                                URLEncoder.encode(
+//                                    it.dataMap["url"]
+//                                )
+//                            }"
+//                        )
+//                    }
                     else -> msg.messageChain.add(it)
                 }
             }
