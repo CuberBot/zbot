@@ -47,4 +47,4 @@
     - 其他服务加起来2G内存
 
 ## 其他
-- 点击[这里](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=a6mqitia)够买服务器
+- 点击[这里](https://promotion.aliyun.com/ntms/yunparter/invite.html?userCode=a6mqitia)购买服务器
