@@ -117,7 +117,7 @@ class TranslatePlugin : BotPlugin() {
 
             // 贴回内容，图片使用controller传参翻译
             var i = 0
-            val msg = Msg.builder().reply(event.messageId).text("翻译结果:\n")
+            val msg = Msg.builder().text("翻译结果:\n")
             event.messageList.forEach {
                 when (it.type) {
                     "text" -> {
