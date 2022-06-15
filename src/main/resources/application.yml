@@ -34,6 +34,7 @@ spring:
       - net.lz1998.zbot.plugin.ExpressPlugin # 快递
       - net.lz1998.zbot.plugin.TranslatePlugin # 翻译
       - net.lz1998.zbot.plugin.SignPlugin # 打卡
+      - net.lz1998.zbot.plugin.NsfwPlugin # nsfw
     event:
       max-pool-size: 300
       core-pool-size: 20
