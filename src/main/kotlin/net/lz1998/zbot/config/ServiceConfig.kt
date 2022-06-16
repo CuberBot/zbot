@@ -28,6 +28,9 @@ object ServiceConfig {
     @Value("\${zbot.service.echarts}")
     var echarts = "echarts.lz1998.xin"
 
+    @Value("\${zbot.service.nsfw}")
+    var nsfw = "nsfw.lz1998.net"
+
     @Value("\${zbot.service.self}")
     var self = "127.0.0.1" // 自己的局域网IP
 }

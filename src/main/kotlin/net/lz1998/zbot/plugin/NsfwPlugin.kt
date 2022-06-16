@@ -6,6 +6,7 @@ import net.lz1998.pbbot.alias.GroupMessageEvent
 import net.lz1998.pbbot.bot.Bot
 import net.lz1998.pbbot.bot.BotPlugin
 import net.lz1998.zbot.aop.annotations.SwitchFilter
+import net.lz1998.zbot.config.ServiceConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -47,7 +48,7 @@ class NsfwPlugin : BotPlugin() {
             val request: HttpEntity<MultiValueMap<String, String>> =
                 HttpEntity<MultiValueMap<String, String>>(map, headers)
             val respStr = restTemplate.postForObject(
-                "http://nsfw.zbot",
+                "http://${ServiceConfig.nsfw}",
                 request,
                 String::class.java
             )
