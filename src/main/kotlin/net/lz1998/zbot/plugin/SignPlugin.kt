@@ -12,7 +12,7 @@ import java.util.*
 @SwitchFilter("sign")
 class SignPlugin : BotPlugin() {
     var day: Int = -1
-    var signedMap = mutableMapOf<Long, Boolean>()
+    var signedMap = mutableMapOf<String, Boolean>()
     var likeMap = mutableMapOf<String, Boolean>()
 
     @PrefixFilter(".")
@@ -25,10 +25,11 @@ class SignPlugin : BotPlugin() {
                 signedMap.clear()
                 likeMap.clear()
             }
-            if (signedMap.containsKey(event.groupId)) {
+            val signKey = "${bot.selfId}:${event.groupId}"
+            if (signedMap.containsKey(signKey)) {
                 return MESSAGE_IGNORE
             }
-            signedMap[event.groupId] = true
+            signedMap[signKey] = true
             if (bot.setGroupSignIn(event.groupId) != null) {
                 bot.sendGroupMsg(event.groupId, "打卡成功")
                 val likeKey = "${bot.selfId}:${event.userId}"
