@@ -13,6 +13,7 @@ import java.util.*
 class SignPlugin : BotPlugin() {
     var day: Int = -1
     var signedMap = mutableMapOf<Long, Boolean>()
+    var likeMap = mutableMapOf<String, Boolean>()
 
     @PrefixFilter(".")
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
@@ -22,6 +23,7 @@ class SignPlugin : BotPlugin() {
             if (today != day) {
                 day = today
                 signedMap.clear()
+                likeMap.clear()
             }
             if (signedMap.containsKey(event.groupId)) {
                 return MESSAGE_IGNORE
@@ -29,6 +31,12 @@ class SignPlugin : BotPlugin() {
             signedMap[event.groupId] = true
             if (bot.setGroupSignIn(event.groupId) != null) {
                 bot.sendGroupMsg(event.groupId, "打卡成功")
+                val likeKey = "${bot.selfId}:${event.userId}"
+                if (!likeMap.containsKey(likeKey)) {
+                    bot.sendLike(event.userId, 10);
+                    likeMap[likeKey] = true
+                    return MESSAGE_BLOCK
+                }
             }
             return MESSAGE_BLOCK
         }
