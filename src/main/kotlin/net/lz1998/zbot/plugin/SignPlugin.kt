@@ -7,13 +7,14 @@ import net.lz1998.zbot.aop.annotations.PrefixFilter
 import net.lz1998.zbot.aop.annotations.SwitchFilter
 import org.springframework.stereotype.Component
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 @Component
 @SwitchFilter("sign")
 class SignPlugin : BotPlugin() {
     var day: Int = -1
-    var signedMap = mutableMapOf<String, Boolean>()
-    var likeMap = mutableMapOf<String, Boolean>()
+    var signedMap = ConcurrentHashMap<String, Boolean>()
+    var likeMap = ConcurrentHashMap<String, Boolean>()
 
     @PrefixFilter(".")
     override fun onGroupMessage(bot: Bot, event: GroupMessageEvent): Int {
@@ -34,8 +35,11 @@ class SignPlugin : BotPlugin() {
                 bot.sendGroupMsg(event.groupId, "打卡成功")
                 val likeKey = "${bot.selfId}:${event.userId}"
                 if (!likeMap.containsKey(likeKey)) {
-                    bot.sendLike(event.userId, 10);
-                    likeMap[likeKey] = true
+                    val resp = bot.getFriendList()
+                    if (resp?.friendList?.map { f -> f.userId }?.contains(event.userId) == true) {
+                        bot.sendLike(event.userId, 10)
+                        likeMap[likeKey] = true
+                    }
                     return MESSAGE_BLOCK
                 }
             }
